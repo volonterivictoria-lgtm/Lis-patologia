@@ -807,7 +807,7 @@ function generarPDF(){
   let hy=y+18;
   if(config.labName&&config.firmanteNombre){doc.text(config.labName,ml,hy);hy+=4.5;}
   if(config.medInstitucion||config.direccion){doc.text(config.medInstitucion||config.direccion,ml,hy);hy+=4.5;}
-  if(config.matricula){doc.text('M.N. '+config.matricula,ml,hy);hy+=4.5;}
+  if(config.matricula){doc.text(config.matricula,ml,hy);hy+=4.5;}
 
   y=Math.max(hy, y+logoSize)+3;
 
@@ -929,7 +929,7 @@ function generarPDF(){
   }
 
   // ── FIRMA ──
-  y=Math.max(y+4, H-60);
+  y=y+8;
   if(y+55>H-22){piePagina(doc,W,H,ml,mr,GRIS);doc.addPage();y=30;}
 
   // Línea separadora
@@ -960,7 +960,7 @@ function piePagina(doc,W,H,ml,mr,GRIS,matricula){
     doc.setPage(i);
     doc.setDrawColor(180,180,180);doc.setLineWidth(0.3);doc.line(ml,H-16,W-mr,H-16);
     doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(...GRIS);
-    if(matricula) doc.text('Médica Patóloga  —  M.N. '+matricula, ml, H-11);
+    if(matricula) doc.text('Médica Patóloga  —  '+matricula, ml, H-11);
     doc.text('Información confidencial — Secreto Médico — Alcance del Artículo 156 del Código Penal', ml, H-7);
     doc.text('Pág. '+i, W-mr, H-7,{align:'right'});
   }
