@@ -947,6 +947,7 @@ function generarPDF(){
   doc.text('Dra. '+(config.firmanteNombre||'Victoria I. Volonteri'),fx,y);y+=5;
   doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(...GRIS);
   if(config.firmanteEsp){doc.text(config.firmanteEsp,fx,y);y+=4.5;}
+  if(config.firmanteMatricula){doc.text(config.firmanteMatricula,fx,y);y+=4.5;}
 
   // Pie de página final
   piePagina(doc,W,H,ml,mr,GRIS,config.firmanteMatricula);
