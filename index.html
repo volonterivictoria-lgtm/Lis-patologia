@@ -875,7 +875,7 @@ function generarPDF(){
   row('Nombre del paciente', caso.pacNombre);
   const e=edad(caso.pacFechaNac);
   if(e!==null) row('Edad', e+' años');
-  if(caso.pacSexo) row('Sexo', caso.pacSexo);
+;
   if(caso.obraSocial) row('Obra Social / Prepaga', caso.obraSocial);
   row('Médico solicitante', caso.medNombre);
   if(caso.medEspecialidad) row('Especialidad', caso.medEspecialidad);
