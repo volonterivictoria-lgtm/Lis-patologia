@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,10 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap');
-  :root {
-    --bg:#f5f3ef;--surface:#fff;--border:#d9d4cc;--accent:#2c4a3e;--accent2:#4a7c68;
-    --gold:#b8965a;--text:#1a1a1a;--muted:#6b6560;--danger:#8b2a2a;--sidebar:#1e3530;
-  }
+  :root{--bg:#f5f3ef;--surface:#fff;--border:#d9d4cc;--accent:#2c4a3e;--accent2:#4a7c68;--gold:#b8965a;--text:#1a1a1a;--muted:#6b6560;--danger:#8b2a2a;--sidebar:#1e3530;}
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;}
   .sidebar{width:240px;background:var(--sidebar);min-height:100vh;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;}
@@ -42,38 +40,28 @@
   input:focus,select:focus,textarea:focus{border-color:var(--accent2);background:#fff;}
   textarea{resize:vertical;min-height:80px;}
   .btn{font-family:'Source Sans 3',sans-serif;font-size:13px;font-weight:600;padding:10px 20px;border-radius:6px;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .2s;white-space:nowrap;}
-  .btn-primary{background:var(--accent);color:#fff;}
-  .btn-primary:hover{background:var(--accent2);}
-  .btn-gold{background:var(--gold);color:#fff;}
-  .btn-gold:hover{background:#a07a40;}
-  .btn-outline{background:transparent;color:var(--accent);border:1px solid var(--border);}
-  .btn-outline:hover{border-color:var(--accent);background:var(--bg);}
-  .btn-danger{background:transparent;color:var(--danger);border:1px solid #e0c0c0;}
-  .btn-danger:hover{background:#fff0f0;}
-  .btn-google{background:#fff;color:#444;border:1px solid #ddd;box-shadow:0 1px 3px rgba(0,0,0,.1);}
-  .btn-google:hover{background:#f8f8f8;box-shadow:0 2px 6px rgba(0,0,0,.15);}
+  .btn-primary{background:var(--accent);color:#fff;} .btn-primary:hover{background:var(--accent2);}
+  .btn-gold{background:var(--gold);color:#fff;} .btn-gold:hover{background:#a07a40;}
+  .btn-outline{background:transparent;color:var(--accent);border:1px solid var(--border);} .btn-outline:hover{border-color:var(--accent);background:var(--bg);}
+  .btn-danger{background:transparent;color:var(--danger);border:1px solid #e0c0c0;} .btn-danger:hover{background:#fff0f0;}
+  .btn-google{background:#fff;color:#444;border:1px solid #ddd;box-shadow:0 1px 3px rgba(0,0,0,.1);} .btn-google:hover{background:#f8f8f8;}
   .btn-sm{padding:6px 12px;font-size:12px;}
   .table-wrap{overflow-x:auto;}
   table{width:100%;border-collapse:collapse;font-size:13px;}
   thead th{background:var(--bg);padding:10px 14px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);}
-  tbody tr{border-bottom:1px solid #f0ece6;transition:background .15s;}
-  tbody tr:hover{background:#faf8f5;}
+  tbody tr{border-bottom:1px solid #f0ece6;transition:background .15s;} tbody tr:hover{background:#faf8f5;}
   tbody td{padding:12px 14px;vertical-align:middle;}
   .num-badge{font-family:'Playfair Display',serif;font-weight:700;color:var(--accent);font-size:14px;}
   .status-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
-  .status-pendiente{background:#fff3cd;color:#856404;}
-  .status-completado{background:#d1e7dd;color:#0f5132;}
-  .status-firmado{background:#cfe2ff;color:#084298;}
+  .status-pendiente{background:#fff3cd;color:#856404;} .status-completado{background:#d1e7dd;color:#0f5132;} .status-firmado{background:#cfe2ff;color:#084298;}
   .search-row{display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap;}
-  .search-row input{max-width:300px;}
-  .search-row select{max-width:160px;}
+  .search-row input{max-width:300px;} .search-row select{max-width:160px;}
   .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:center;justify-content:center;}
   .modal-overlay.open{display:flex;}
   .modal{background:var(--surface);border-radius:10px;width:92%;max-width:860px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);}
   .modal-header{padding:20px 28px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--surface);z-index:10;}
   .modal-header h3{font-family:'Playfair Display',serif;font-size:18px;color:var(--accent);}
-  .modal-body{padding:28px;}
-  .modal-footer{padding:16px 28px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;background:var(--bg);border-radius:0 0 10px 10px;}
+  .modal-body{padding:28px;} .modal-footer{padding:16px 28px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;background:var(--bg);border-radius:0 0 10px 10px;}
   .close-btn{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;}
   .settings-section{margin-bottom:28px;}
   .settings-section h4{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
@@ -81,67 +69,58 @@
   .logo-upload-area:hover{border-color:var(--accent2);}
   .logo-preview{max-height:80px;max-width:300px;}
   .toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;z-index:999;transform:translateY(100px);transition:transform .3s;box-shadow:0 4px 20px rgba(0,0,0,.2);}
-  .toast.show{transform:translateY(0);}
-  .toast.error{background:var(--danger);}
+  .toast.show{transform:translateY(0);} .toast.error{background:var(--danger);}
   .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
   .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px 24px;}
   .stat-card .stat-num{font-family:'Playfair Display',serif;font-size:32px;color:var(--accent);font-weight:700;}
   .stat-card .stat-label{font-size:12px;color:var(--muted);font-weight:500;margin-top:4px;}
   .stat-card .stat-sub{font-size:11px;color:var(--muted);margin-top:2px;}
-  .page{display:none;}
-  .page.active{display:block;}
+  .page{display:none;} .page.active{display:block;}
   .section-divider{border:none;border-top:1px solid var(--border);margin:20px 0;}
-  .text-muted{color:var(--muted);font-size:13px;}
-  .mt-16{margin-top:16px;}
+  .text-muted{color:var(--muted);font-size:13px;} .mt-16{margin-top:16px;}
   .flex{display:flex;align-items:center;gap:10px;}
   .empty-state{text-align:center;padding:60px 20px;color:var(--muted);}
   .sec-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:14px;display:block;}
-
-  /* DRIVE STATUS */
   .drive-status-bar{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
   .drive-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
-  .drive-dot.disconnected{background:#ccc;}
-  .drive-dot.connecting{background:var(--gold);animation:pulse 1s infinite;}
-  .drive-dot.connected{background:#2ecc71;}
-  .drive-dot.error{background:var(--danger);}
+  .drive-dot.disconnected{background:#ccc;} .drive-dot.connecting,.drive-dot.saving{background:var(--gold);animation:pulse 1s infinite;} .drive-dot.connected{background:#2ecc71;} .drive-dot.error{background:var(--danger);}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-  .drive-info{flex:1;font-size:13px;}
-  .drive-info strong{display:block;font-size:14px;color:var(--text);}
-  .drive-info span{color:var(--muted);font-size:12px;}
+  .drive-info{flex:1;font-size:13px;} .drive-info strong{display:block;font-size:14px;color:var(--text);} .drive-info span{color:var(--muted);font-size:12px;}
   .drive-actions{display:flex;gap:8px;}
-
-  /* MUESTRAS */
   .muestras-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
   .muestras-header .sec-label{margin-bottom:0;}
   .muestras-counter{font-size:12px;color:var(--muted);font-weight:500;background:var(--bg);border:1px solid var(--border);padding:3px 12px;border-radius:20px;}
-  .muestra-card{border:1px solid var(--border);border-radius:8px;margin-bottom:12px;background:#fbfaf8;overflow:hidden;transition:border-color .2s;}
+  .muestra-card{border:1px solid var(--border);border-radius:8px;margin-bottom:12px;background:#fbfaf8;overflow:hidden;}
   .muestra-card:focus-within{border-color:var(--accent2);}
   .muestra-card-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg);border-bottom:1px solid var(--border);cursor:pointer;user-select:none;}
   .muestra-card-header:hover{background:#ede8e0;}
   .muestra-card-title{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--accent);}
-  .muestra-pill{background:var(--accent);color:#fff;border-radius:20px;font-size:11px;font-weight:700;padding:2px 10px;letter-spacing:.04em;min-width:60px;text-align:center;}
+  .muestra-pill{background:var(--accent);color:#fff;border-radius:20px;font-size:11px;font-weight:700;padding:2px 10px;min-width:60px;text-align:center;}
   .muestra-pill.has-data{background:var(--accent2);}
   .muestra-title-preview{font-size:12px;color:var(--muted);font-weight:400;}
   .muestra-card-actions{display:flex;gap:6px;align-items:center;}
-  .muestra-toggle-btn{background:none;border:none;cursor:pointer;color:var(--muted);font-size:18px;line-height:1;padding:2px 4px;border-radius:4px;transition:transform .2s;}
+  .muestra-toggle-btn{background:none;border:none;cursor:pointer;color:var(--muted);font-size:18px;line-height:1;padding:2px 4px;transition:transform .2s;}
   .muestra-toggle-btn.open{transform:rotate(180deg);}
-  .muestra-remove-btn{background:none;border:1px solid #e0c0c0;cursor:pointer;color:var(--danger);font-size:12px;font-weight:600;padding:3px 8px;border-radius:4px;transition:background .15s;}
+  .muestra-remove-btn{background:none;border:1px solid #e0c0c0;cursor:pointer;color:var(--danger);font-size:12px;font-weight:600;padding:3px 8px;border-radius:4px;}
   .muestra-remove-btn:hover{background:#fff0f0;}
-  .muestra-card-body{padding:16px;}
-  .muestra-card-body.hidden{display:none;}
+  .muestra-card-body{padding:16px;} .muestra-card-body.hidden{display:none;}
   .btn-add-muestra{width:100%;border:2px dashed var(--border);background:transparent;color:var(--accent2);font-family:'Source Sans 3',sans-serif;font-size:13px;font-weight:600;padding:12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;margin-top:4px;}
   .btn-add-muestra:hover{border-color:var(--accent2);background:#f0f7f4;}
-
-  /* SETUP GUIDE */
-  .setup-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:28px;margin-bottom:20px;}
-  .setup-step{display:flex;gap:16px;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border);}
-  .setup-step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
-  .step-num{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .step-content h4{font-size:15px;font-weight:600;color:var(--accent);margin-bottom:6px;}
-  .step-content p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:8px;}
-  .step-content code{background:#f0ece6;padding:2px 8px;border-radius:4px;font-family:monospace;font-size:12px;color:var(--accent);}
-  .step-content a{color:var(--accent2);text-decoration:underline;}
-  .alert-box{background:#fff8e6;border:1px solid #f0d080;border-radius:8px;padding:14px 18px;font-size:13px;color:#6b4e00;margin-bottom:20px;display:flex;gap:10px;align-items:flex-start;}
+  /* FIRMA */
+  .firma-tabs{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px;}
+  .firma-tab{flex:1;padding:10px;text-align:center;cursor:pointer;font-size:13px;font-weight:600;background:var(--bg);color:var(--muted);border:none;transition:all .2s;}
+  .firma-tab.active{background:var(--accent);color:#fff;}
+  .firma-tab:hover:not(.active){background:#ede8e0;}
+  .firma-panel{display:none;} .firma-panel.active{display:block;}
+  .firma-canvas-wrap{position:relative;border:2px solid var(--border);border-radius:8px;background:#fff;overflow:hidden;touch-action:none;}
+  .firma-canvas-wrap:hover{border-color:var(--accent2);}
+  #firmaCanvas{display:block;cursor:crosshair;width:100%;height:160px;}
+  .firma-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#ccc;font-size:13px;pointer-events:none;text-align:center;}
+  .firma-hint.hidden{display:none;}
+  .firma-preview-wrap{border:1px solid var(--border);border-radius:8px;padding:16px;background:#fff;text-align:center;min-height:90px;display:flex;align-items:center;justify-content:center;}
+  .firma-preview-wrap img{max-height:80px;max-width:100%;}
+  .firma-ok-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px;}
+  .firma-ok-dot.ok{background:#2ecc71;} .firma-ok-dot.none{background:#ccc;}
 </style>
 </head>
 <body>
@@ -153,27 +132,19 @@
   </div>
   <nav class="sidebar-nav">
     <div class="nav-item active" onclick="showPage('dashboard')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      Dashboard
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard
     </div>
     <div class="nav-item" onclick="showPage('nuevo')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-      Nueva Biopsia
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>Nueva Biopsia
     </div>
     <div class="nav-item" onclick="showPage('listado')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-      Listado de Casos
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Listado de Casos
     </div>
     <div class="nav-item" onclick="showPage('config')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-      Configuración
-    </div>
-    <div class="nav-item" onclick="showPage('setup')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.37a16 16 0 0 0 6.29 6.29l1.16-1.16a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      Guía de Configuración
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>Configuración
     </div>
   </nav>
-  <div class="sidebar-footer" id="sidebarFooter">
+  <div class="sidebar-footer">
     <span class="drive-dot disconnected" id="syncDot" style="display:inline-block;margin-right:6px;"></span>
     <span id="syncStatus">No conectado</span>
   </div>
@@ -189,12 +160,11 @@
 
   <div class="content">
 
-    <!-- DRIVE STATUS BAR (visible en todas las páginas excepto setup) -->
     <div class="drive-status-bar" id="driveStatusBar">
       <span class="drive-dot disconnected" id="driveStatusDot"></span>
       <div class="drive-info">
         <strong id="driveStatusTitle">Google Drive no conectado</strong>
-        <span id="driveStatusSub">Configurá tu Client ID para sincronizar los datos</span>
+        <span id="driveStatusSub">Configurá tu Client ID para sincronizar</span>
       </div>
       <div class="drive-actions">
         <button class="btn btn-google btn-sm" id="driveConnectBtn" onclick="driveSignIn()">
@@ -226,7 +196,7 @@
         <div class="panel-body">
           <div class="form-grid three">
             <div class="form-group"><label>Número de Caso</label><input type="text" id="nroInput" readonly style="background:#f0ece6;font-weight:700;color:var(--accent);font-size:15px;"></div>
-            <div class="form-group"><label>Fecha de Recepción</label><input type="date" id="fechaRecepcion" required></div>
+            <div class="form-group"><label>Fecha de Recepción</label><input type="date" id="fechaRecepcion"></div>
             <div class="form-group"><label>Estado</label><select id="estadoSelect"><option value="pendiente">Pendiente</option><option value="completado">Completado</option><option value="firmado">Firmado</option></select></div>
           </div>
           <hr class="section-divider">
@@ -240,13 +210,13 @@
           <hr class="section-divider">
           <span class="sec-label">Médico y Clínica</span>
           <div class="form-grid">
-            <div class="form-group"><label>Médico Solicitante</label><input type="text" id="medNombre" placeholder="Dr./Dra. Apellido, Nombre"></div>
+            <div class="form-group"><label>Médico Solicitante</label><input type="text" id="medNombre"></div>
             <div class="form-group"><label>Especialidad</label><input type="text" id="medEspecialidad"></div>
             <div class="form-group"><label>Institución / Servicio</label><input type="text" id="medInstitucion"></div>
             <div class="form-group"><label>Obra Social / Prepaga</label><input type="text" id="obraSocial"></div>
           </div>
           <hr class="section-divider">
-          <span class="sec-label">Datos Clínicos / Diagnóstico Presuntivo</span>
+          <span class="sec-label">Datos Clínicos</span>
           <div class="form-group"><textarea id="datosClinicos" placeholder="Información clínica relevante, sospecha diagnóstica..."></textarea></div>
           <hr class="section-divider">
           <div class="muestras-header">
@@ -260,9 +230,8 @@
           </button>
           <hr class="section-divider">
           <span class="sec-label">Diagnóstico General / Conclusión</span>
-          <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">Opcional — resumen integrador de todas las muestras.</p>
-          <div class="form-group"><textarea id="diagnostico" style="min-height:80px;" placeholder="Conclusión integradora..."></textarea></div>
-          <div class="form-group mt-16"><label>Observaciones / Notas</label><textarea id="observaciones" placeholder="Notas adicionales..."></textarea></div>
+          <div class="form-group"><textarea id="diagnostico" style="min-height:80px;" placeholder="Conclusión integradora (opcional)..."></textarea></div>
+          <div class="form-group mt-16"><label>Observaciones / Notas</label><textarea id="observaciones"></textarea></div>
           <div class="flex" style="margin-top:24px;">
             <button class="btn btn-primary" onclick="guardarCaso()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
@@ -294,16 +263,15 @@
       <div class="panel">
         <div class="panel-header"><h3>Configuración del Laboratorio</h3></div>
         <div class="panel-body">
+
           <div class="settings-section">
             <h4>Google Drive — Client ID</h4>
-            <div class="form-grid">
-              <div class="form-group full">
-                <label>Client ID de Google</label>
-                <input type="text" id="cfgClientId" placeholder="xxxxxxxxxxxx-xxxxxxxxxxxxxxxx.apps.googleusercontent.com">
-                <p style="font-size:12px;color:var(--muted);margin-top:4px;">Obtenelo en Google Cloud Console → Credenciales. Ver <strong onclick="showPage('setup')" style="cursor:pointer;color:var(--accent2);">Guía de Configuración</strong>.</p>
-              </div>
+            <div class="form-group">
+              <label>Client ID de Google</label>
+              <input type="text" id="cfgClientId" placeholder="xxxx.apps.googleusercontent.com">
             </div>
           </div>
+
           <div class="settings-section">
             <h4>Identificación del Laboratorio</h4>
             <div class="form-grid">
@@ -311,17 +279,64 @@
               <div class="form-group"><label>Dirección</label><input type="text" id="cfgDireccion"></div>
               <div class="form-group"><label>Teléfono</label><input type="text" id="cfgTelefono"></div>
               <div class="form-group"><label>Email</label><input type="email" id="cfgEmail"></div>
-              <div class="form-group"><label>Registro / Matrícula del Lab</label><input type="text" id="cfgMatricula"></div>
+              <div class="form-group"><label>Matrícula del Laboratorio</label><input type="text" id="cfgMatricula"></div>
             </div>
           </div>
+
           <div class="settings-section">
             <h4>Médico Firmante</h4>
             <div class="form-grid">
               <div class="form-group"><label>Nombre Completo</label><input type="text" id="cfgFirmanteNombre"></div>
               <div class="form-group"><label>Especialidad / Cargo</label><input type="text" id="cfgFirmanteEsp"></div>
-              <div class="form-group"><label>Matrícula del Firmante</label><input type="text" id="cfgFirmanteMatricula"></div>
+              <div class="form-group"><label>Matrícula</label><input type="text" id="cfgFirmanteMatricula"></div>
             </div>
           </div>
+
+          <!-- FIRMA ELECTRÓNICA -->
+          <div class="settings-section">
+            <h4>Firma Electrónica</h4>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">La firma se guarda en este navegador y aparece automáticamente en todos los PDFs.</p>
+
+            <div class="firma-tabs">
+              <button class="firma-tab active" id="tabDibujar" onclick="switchFirmaTab('dibujar',this)">✏️ Dibujar firma</button>
+              <button class="firma-tab" id="tabSubir" onclick="switchFirmaTab('subir',this)">🖼️ Subir imagen</button>
+            </div>
+
+            <div class="firma-panel active" id="firmaPanel_dibujar">
+              <div class="firma-canvas-wrap">
+                <canvas id="firmaCanvas" height="160"></canvas>
+                <div class="firma-hint" id="firmaHint">Dibujá tu firma aquí con el mouse o el dedo</div>
+              </div>
+              <div class="flex" style="margin-top:10px;">
+                <button class="btn btn-outline btn-sm" onclick="limpiarCanvas()">🗑️ Borrar</button>
+                <button class="btn btn-primary btn-sm" onclick="guardarFirmaCanvas()">✓ Usar esta firma</button>
+              </div>
+            </div>
+
+            <div class="firma-panel" id="firmaPanel_subir">
+              <div class="logo-upload-area" onclick="document.getElementById('firmaImgInput').click()">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5" style="margin-bottom:8px;display:block;margin-left:auto;margin-right:auto;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <p style="color:var(--muted);font-size:13px;">Hacé clic para subir tu firma (PNG o JPG)</p>
+                <p style="color:var(--muted);font-size:11px;margin-top:4px;">Recomendado: fondo blanco</p>
+              </div>
+              <input type="file" id="firmaImgInput" accept="image/*" style="display:none" onchange="cargarFirmaImagen(event)">
+            </div>
+
+            <div style="margin-top:20px;">
+              <p style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:10px;">Vista previa — firma actual</p>
+              <div class="firma-preview-wrap" id="firmaPreviewWrap">
+                <span style="color:#ccc;font-size:13px;">Sin firma guardada</span>
+              </div>
+              <div class="flex" style="margin-top:10px;">
+                <span style="font-size:12px;color:var(--muted);">
+                  <span class="firma-ok-dot none" id="firmaOkDot"></span>
+                  <span id="firmaOkTxt">Sin firma</span>
+                </span>
+                <button class="btn btn-danger btn-sm" id="firmaEliminarBtn" onclick="eliminarFirma()" style="display:none;margin-left:auto;">Eliminar firma</button>
+              </div>
+            </div>
+          </div>
+
           <div class="settings-section">
             <h4>Logo del Laboratorio</h4>
             <div class="logo-upload-area" onclick="document.getElementById('logoInput').click()">
@@ -333,106 +348,26 @@
             <input type="file" id="logoInput" accept="image/*" style="display:none" onchange="handleLogoUpload(event)">
             <button class="btn btn-outline btn-sm" onclick="clearLogo()" id="clearLogoBtn" style="display:none;">Quitar logo</button>
           </div>
+
           <div class="settings-section">
             <h4>Numeración</h4>
             <div class="form-grid three">
-              <div class="form-group"><label>Año (prefijo, ej: 26)</label><input type="number" id="cfgAnio" placeholder="26"></div>
-              <div class="form-group"><label>Próximo número correlativo</label><input type="number" id="cfgProxNum" min="1" placeholder="825"></div>
+              <div class="form-group"><label>Año (prefijo, ej: 26)</label><input type="number" id="cfgAnio"></div>
+              <div class="form-group"><label>Próximo número correlativo</label><input type="number" id="cfgProxNum" min="1"></div>
               <div class="form-group"><label>Formato</label><input type="text" readonly value="AA-NNN" style="background:#f0ece6;color:var(--muted);"></div>
             </div>
             <p class="text-muted" style="margin-top:8px;">Ej: año <strong>26</strong> + número <strong>825</strong> → caso <strong>26-825</strong>.</p>
           </div>
+
           <button class="btn btn-primary" onclick="guardarConfig()">Guardar Configuración</button>
         </div>
       </div>
     </div>
 
-    <!-- GUÍA DE CONFIGURACIÓN -->
-    <div class="page" id="page-setup">
-      <div class="alert-box">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <div>Este proceso se hace <strong>una sola vez</strong>. Después todos los que accedan al sistema con el mismo Client ID podrán conectarse con su cuenta de Google y leer/escribir los mismos datos.</div>
-      </div>
-      <div class="setup-card">
-        <h3 style="font-family:'Playfair Display',serif;color:var(--accent);margin-bottom:24px;">Cómo configurar Google Drive</h3>
-
-        <div class="setup-step">
-          <div class="step-num">1</div>
-          <div class="step-content">
-            <h4>Crear un proyecto en Google Cloud Console</h4>
-            <p>Entrá a <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a> con tu cuenta de Google. Hacé clic en el selector de proyectos (arriba a la izquierda) → <strong>Nuevo Proyecto</strong>. Dale un nombre como <em>"LIS Anatomía Patológica"</em> y crealo.</p>
-          </div>
-        </div>
-
-        <div class="setup-step">
-          <div class="step-num">2</div>
-          <div class="step-content">
-            <h4>Activar la API de Google Drive</h4>
-            <p>En el menú izquierdo andá a <strong>APIs y Servicios → Biblioteca</strong>. Buscá <em>"Google Drive API"</em> y hacé clic en <strong>Habilitar</strong>.</p>
-          </div>
-        </div>
-
-        <div class="setup-step">
-          <div class="step-num">3</div>
-          <div class="step-content">
-            <h4>Crear credenciales OAuth 2.0</h4>
-            <p>Andá a <strong>APIs y Servicios → Credenciales → Crear Credenciales → ID de cliente OAuth 2.0</strong>.</p>
-            <p>En "Tipo de aplicación" elegí <strong>Aplicación web</strong>. En el nombre ponés lo que quieras.</p>
-            <p>En <strong>"Orígenes autorizados de JavaScript"</strong> agregá las URLs desde donde vas a abrir el archivo:</p>
-            <p><code>file://</code> (si lo abrís directo desde tu computadora)</p>
-            <p><code>http://localhost</code> (opcional, si lo servís localmente)</p>
-            <p>También podés agregar el dominio de claude.ai si lo usás desde ahí: <code>https://claude.ai</code></p>
-            <p>Hacé clic en <strong>Crear</strong>. Google te va a mostrar tu <strong>Client ID</strong>.</p>
-          </div>
-        </div>
-
-        <div class="setup-step">
-          <div class="step-num">4</div>
-          <div class="step-content">
-            <h4>Configurar la Pantalla de Consentimiento OAuth</h4>
-            <p>Antes de crear credenciales, Google puede pedirte configurar la pantalla de consentimiento. Andá a <strong>APIs y Servicios → Pantalla de consentimiento OAuth</strong>.</p>
-            <p>Elegí <strong>Externo</strong>. Completá el nombre de la app y tu email. En <strong>Usuarios de prueba</strong> agregá los emails de todos los que van a usar el sistema. Guardá.</p>
-          </div>
-        </div>
-
-        <div class="setup-step">
-          <div class="step-num">5</div>
-          <div class="step-content">
-            <h4>Pegar el Client ID en el sistema</h4>
-            <p>Copiá el Client ID que obtuviste (tiene el formato <code>xxxx.apps.googleusercontent.com</code>). Andá a <strong>Configuración</strong> en el menú de la izquierda y pegalo en el campo <strong>"Client ID de Google"</strong>. Guardá la configuración.</p>
-            <p>¡Listo! Ahora podés hacer clic en <strong>"Conectar con Google"</strong> en la barra superior.</p>
-          </div>
-        </div>
-
-        <div class="setup-step">
-          <div class="step-num">6</div>
-          <div class="step-content">
-            <h4>¿Cómo funciona en otras computadoras?</h4>
-            <p>Cualquier persona que tenga el archivo HTML y el mismo Client ID puede abrir el sistema, hacer clic en "Conectar con Google" e ingresar con su cuenta. Los datos se guardan en el Google Drive del usuario que está conectado.</p>
-            <p><strong>Para compartir datos entre varias personas</strong> recomendamos que una sola persona sea la "dueña" del Drive y comparta acceso al archivo <code>lis_datos.json</code> con los demás, o que usen la misma cuenta de Google para conectarse.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-header"><h3>Probar la conexión</h3></div>
-        <div class="panel-body">
-          <p style="margin-bottom:16px;font-size:14px;color:var(--muted);">Una vez que configuraste el Client ID, probá la conexión aquí:</p>
-          <div class="flex">
-            <button class="btn btn-google" onclick="driveSignIn()">
-              <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-              Conectar con Google Drive
-            </button>
-            <span id="setupTestStatus" style="font-size:13px;color:var(--muted);"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /content -->
+  </div>
 </main>
 
-<!-- MODAL VER/EDITAR -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-header">
@@ -453,491 +388,342 @@
 </div>
 
 <div class="toast" id="toast"></div>
-
-<!-- Google Identity Services -->
 <script src="https://accounts.google.com/gsi/client" async defer></script>
-
 <script>
-// ═══════════════════════════════════════════════
-//  ESTADO
-// ═══════════════════════════════════════════════
-let casos = [];
-let config = {
-  clientId: '',
-  labName: 'Laboratorio de Anatomía Patológica',
-  direccion: '', telefono: '', email: '', matricula: '',
-  firmanteNombre: '', firmanteEsp: 'Médico Anatomopatólogo', firmanteMatricula: '',
-  anio: String(new Date().getFullYear()).slice(-2),
-  proxNum: 825, logo: null
-};
-let casoEditando = null;
-let muestrasNew = [];
-let muestrasEdit = [];
+let casos=[],casoEditando=null,muestrasNew=[],muestrasEdit=[];
+let config={clientId:'897767419089-m9e6qgf6jplqd437kp3ub7o3tf9nsu8q.apps.googleusercontent.com',labName:'Laboratorio de Anatomía Patológica',direccion:'',telefono:'',email:'',matricula:'',firmanteNombre:'',firmanteEsp:'Médico Anatomopatólogo',firmanteMatricula:'',anio:String(new Date().getFullYear()).slice(-2),proxNum:825,logo:null};
+let firmaDataUrl=null;
 
-// ═══════════════════════════════════════════════
-//  GOOGLE DRIVE
-// ═══════════════════════════════════════════════
-const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.appdata';
-const DRIVE_API   = 'https://www.googleapis.com/drive/v3';
-const UPLOAD_API  = 'https://www.googleapis.com/upload/drive/v3';
-const FILENAME    = 'lis_datos.json';
-const FOLDER      = 'appDataFolder'; // carpeta oculta privada por app, no visible en Drive del usuario
+// ── DRIVE ──
+const DRIVE_SCOPE='https://www.googleapis.com/auth/drive.appdata';
+const DRIVE_API='https://www.googleapis.com/drive/v3';
+const UPLOAD_API='https://www.googleapis.com/upload/drive/v3';
+let accessToken=null,driveFileId=null,driveUser=null;
 
-let accessToken = null;
-let driveFileId = null;
-let driveUser   = null;
-
-function setDriveStatus(state, sub) {
-  const dot  = document.getElementById('driveStatusDot');
-  const sync = document.getElementById('syncDot');
-  const title = document.getElementById('driveStatusTitle');
-  const subEl = document.getElementById('driveStatusSub');
-  const connectBtn = document.getElementById('driveConnectBtn');
-  const disconnectBtn = document.getElementById('driveDisconnectBtn');
-
-  dot.className  = 'drive-dot ' + state;
-  sync.className = 'drive-dot ' + state;
-  subEl.textContent = sub || '';
-
-  if (state === 'connected') {
-    title.textContent = `Conectado como ${driveUser || 'usuario de Google'}`;
-    connectBtn.style.display = 'none';
-    disconnectBtn.style.display = 'inline-flex';
-    document.getElementById('syncStatus').textContent = 'Drive conectado';
-  } else if (state === 'connecting') {
-    title.textContent = 'Conectando con Google Drive…';
-    document.getElementById('syncStatus').textContent = 'Conectando…';
-  } else if (state === 'saving') {
-    title.textContent = `Guardando en Drive…`;
-    document.getElementById('syncStatus').textContent = 'Guardando…';
-  } else if (state === 'error') {
-    title.textContent = 'Error de conexión con Google Drive';
-    connectBtn.style.display = 'inline-flex';
-    disconnectBtn.style.display = 'none';
-    document.getElementById('syncStatus').textContent = 'Error';
-  } else {
-    title.textContent = 'Google Drive no conectado';
-    connectBtn.style.display = 'inline-flex';
-    disconnectBtn.style.display = 'none';
-    document.getElementById('syncStatus').textContent = 'No conectado';
-  }
+function setDriveStatus(s,sub){
+  const d=document.getElementById('driveStatusDot'),sy=document.getElementById('syncDot');
+  const ti=document.getElementById('driveStatusTitle'),su=document.getElementById('driveStatusSub');
+  const cb=document.getElementById('driveConnectBtn'),db=document.getElementById('driveDisconnectBtn');
+  d.className=sy.className='drive-dot '+s; su.textContent=sub||'';
+  if(s==='connected'){ti.textContent='Conectado como '+(driveUser||'usuario');cb.style.display='none';db.style.display='inline-flex';document.getElementById('syncStatus').textContent='Drive conectado';}
+  else if(s==='connecting'||s==='saving'){ti.textContent=s==='saving'?'Guardando…':'Conectando…';document.getElementById('syncStatus').textContent=s==='saving'?'Guardando…':'Conectando…';}
+  else if(s==='error'){ti.textContent='Error de conexión';cb.style.display='inline-flex';db.style.display='none';document.getElementById('syncStatus').textContent='Error';}
+  else{ti.textContent='Google Drive no conectado';cb.style.display='inline-flex';db.style.display='none';document.getElementById('syncStatus').textContent='No conectado';}
 }
 
-function driveSignIn() {
-  if (!config.clientId) {
-    showToast('Primero configurá el Client ID de Google en Configuración', true);
-    showPage('config');
-    return;
-  }
-  setDriveStatus('connecting', 'Abriendo ventana de Google…');
-  const client = google.accounts.oauth2.initTokenClient({
-    client_id: config.clientId,
-    scope: DRIVE_SCOPE,
-    callback: async (resp) => {
-      if (resp.error) {
-        setDriveStatus('error', resp.error);
-        showToast('Error al conectar con Google: ' + resp.error, true);
-        return;
-      }
-      accessToken = resp.access_token;
-      // Obtener info del usuario
-      try {
-        const userResp = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-          headers: { Authorization: 'Bearer ' + accessToken }
-        });
-        const userInfo = await userResp.json();
-        driveUser = userInfo.email || userInfo.name || 'usuario';
-      } catch(e) { driveUser = 'usuario de Google'; }
-      setDriveStatus('connecting', 'Buscando datos en Drive…');
-      await driveLoadData();
-      setDriveStatus('connected');
-      showToast('Conectado a Google Drive como ' + driveUser);
-      document.getElementById('setupTestStatus').textContent = '✓ Conexión exitosa como ' + driveUser;
-    }
-  });
-  client.requestAccessToken();
+function driveSignIn(){
+  if(!config.clientId){showToast('Configurá el Client ID primero',true);showPage('config');return;}
+  setDriveStatus('connecting');
+  google.accounts.oauth2.initTokenClient({client_id:config.clientId,scope:DRIVE_SCOPE,callback:async r=>{
+    if(r.error){setDriveStatus('error',r.error);showToast('Error: '+r.error,true);return;}
+    accessToken=r.access_token;
+    try{const u=await(await fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+accessToken}})).json();driveUser=u.email||'usuario';}catch(e){driveUser='usuario de Google';}
+    setDriveStatus('connecting','Buscando datos…');
+    await driveLoadData();setDriveStatus('connected');showToast('Conectado como '+driveUser);
+  }}).requestAccessToken();
 }
 
-function driveSignOut() {
-  if (accessToken) google.accounts.oauth2.revoke(accessToken, ()=>{});
-  accessToken = null; driveFileId = null; driveUser = null;
-  setDriveStatus('disconnected', 'Desconectado');
-  showToast('Sesión de Google Drive cerrada');
+function driveSignOut(){if(accessToken)google.accounts.oauth2.revoke(accessToken,()=>{});accessToken=null;driveFileId=null;driveUser=null;setDriveStatus('disconnected');showToast('Sesión cerrada');}
+
+async function driveReq(url,o={}){
+  if(!accessToken)throw new Error('No autenticado');
+  const r=await fetch(url,{...o,headers:{Authorization:'Bearer '+accessToken,...(o.headers||{})}});
+  if(!r.ok)throw new Error(`${r.status}: ${await r.text()}`);return r;
 }
 
-async function driveRequest(url, options = {}) {
-  if (!accessToken) throw new Error('No autenticado');
-  const resp = await fetch(url, {
-    ...options,
-    headers: { Authorization: 'Bearer ' + accessToken, ...(options.headers || {}) }
-  });
-  if (!resp.ok) {
-    const err = await resp.text();
-    throw new Error(`Drive API error ${resp.status}: ${err}`);
-  }
-  return resp;
+async function driveLoadData(){
+  try{
+    const r=await driveReq(`${DRIVE_API}/files?spaces=appDataFolder&q=name='lis_datos.json'&fields=files(id)`);
+    const f=(await r.json()).files;
+    if(!f||!f.length){driveFileId=null;return;}
+    driveFileId=f[0].id;
+    const d=await(await driveReq(`${DRIVE_API}/files/${driveFileId}?alt=media`)).json();
+    if(d.casos)casos=d.casos;if(d.config)config={...config,...d.config};
+    applyConfig();updateNextNumBadge();renderDashboard();renderListado();
+  }catch(e){showToast('Error cargando: '+e.message,true);}
 }
 
-async function driveFindFile() {
-  const resp = await driveRequest(
-    `${DRIVE_API}/files?spaces=${FOLDER}&q=name='${FILENAME}'&fields=files(id,name,modifiedTime)`
-  );
-  const data = await resp.json();
-  return data.files && data.files.length > 0 ? data.files[0] : null;
-}
-
-async function driveLoadData() {
-  try {
-    const file = await driveFindFile();
-    if (!file) { driveFileId = null; return; } // no hay datos aún, está bien
-    driveFileId = file.id;
-    const resp = await driveRequest(`${DRIVE_API}/files/${driveFileId}?alt=media`);
-    const data = await resp.json();
-    if (data.casos) casos = data.casos;
-    if (data.config) config = { ...config, ...data.config };
-    applyConfig(); updateNextNumBadge(); renderDashboard(); renderListado();
-  } catch(e) {
-    console.error('Error cargando datos de Drive:', e);
-    showToast('Error al cargar datos de Drive: ' + e.message, true);
-  }
-}
-
-async function driveSaveData() {
-  if (!accessToken) {
-    showToast('No conectado a Google Drive — datos no guardados en la nube', true);
-    return;
-  }
+async function driveSaveData(){
+  if(!accessToken){showToast('No conectado a Drive',true);return;}
   setDriveStatus('saving');
-  const payload = JSON.stringify({ casos, config: { ...config, logo: null } }); // no guardar logo base64 en JSON (muy pesado)
-  try {
-    if (!driveFileId) {
-      // Crear archivo nuevo
-      const meta = JSON.stringify({ name: FILENAME, parents: [FOLDER] });
-      const boundary = 'lis_boundary_' + Date.now();
-      const body = `--${boundary}\r\nContent-Type: application/json\r\n\r\n${meta}\r\n--${boundary}\r\nContent-Type: application/json\r\n\r\n${payload}\r\n--${boundary}--`;
-      const resp = await driveRequest(
-        `${UPLOAD_API}/files?uploadType=multipart&fields=id`,
-        { method: 'POST', headers: { 'Content-Type': `multipart/related; boundary=${boundary}` }, body }
-      );
-      const created = await resp.json();
-      driveFileId = created.id;
-    } else {
-      // Actualizar archivo existente
-      await driveRequest(
-        `${UPLOAD_API}/files/${driveFileId}?uploadType=media`,
-        { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: payload }
-      );
+  const payload=JSON.stringify({casos,config:{...config,logo:null}});
+  try{
+    if(!driveFileId){
+      const meta=JSON.stringify({name:'lis_datos.json',parents:['appDataFolder']});
+      const b='b'+Date.now();
+      const body=`--${b}\r\nContent-Type: application/json\r\n\r\n${meta}\r\n--${b}\r\nContent-Type: application/json\r\n\r\n${payload}\r\n--${b}--`;
+      driveFileId=(await(await driveReq(`${UPLOAD_API}/files?uploadType=multipart&fields=id`,{method:'POST',headers:{'Content-Type':`multipart/related; boundary=${b}`},body})).json()).id;
+    }else{
+      await driveReq(`${UPLOAD_API}/files/${driveFileId}?uploadType=media`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:payload});
     }
-    setDriveStatus('connected', `Último guardado: ${new Date().toLocaleTimeString('es-AR')}`);
-  } catch(e) {
-    setDriveStatus('error', e.message);
-    showToast('Error al guardar en Drive: ' + e.message, true);
+    setDriveStatus('connected','Guardado: '+new Date().toLocaleTimeString('es-AR'));
+  }catch(e){setDriveStatus('error',e.message);showToast('Error al guardar: '+e.message,true);}
+}
+
+// ── LOCAL STORAGE ──
+function lsave(){try{localStorage.setItem('lis_cfg',JSON.stringify(config));}catch(e){}}
+function lload(){try{const s=localStorage.getItem('lis_cfg');if(s)config={...config,...JSON.parse(s)};}catch(e){}}
+function lsaveFirma(){try{firmaDataUrl?localStorage.setItem('lis_firma',firmaDataUrl):localStorage.removeItem('lis_firma');}catch(e){}}
+function lloadFirma(){try{firmaDataUrl=localStorage.getItem('lis_firma')||null;}catch(e){}}
+
+function init(){lload();lloadFirma();applyConfig();updateNextNumBadge();renderDashboard();renderListado();setDriveStatus('disconnected');initCanvas();refreshFirmaPreview();}
+
+// ── NAV ──
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  const map={dashboard:'Dashboard',nuevo:'Nueva Biopsia',listado:'Listado de Casos',config:'Configuración'};
+  document.getElementById('pageTitle').textContent=map[id]||id;
+  document.querySelectorAll('.nav-item').forEach(n=>{if(n.textContent.toLowerCase().includes(id==='nuevo'?'nueva':id))n.classList.add('active');});
+  if(id==='nuevo'){resetForm();setNextNum();}
+  if(id==='listado'){renderListado();populateYearFilter();}
+  if(id==='config'){loadConfigForm();refreshFirmaPreview();}
+  if(id==='dashboard')renderDashboard();
+}
+
+// ── NUMERACIÓN ──
+function getNextNumStr(){return `${String(config.anio).padStart(2,'0')}-${String(config.proxNum).padStart(3,'0')}`;}
+function setNextNum(){document.getElementById('nroInput').value=getNextNumStr();}
+function updateNextNumBadge(){document.getElementById('nextNumBadge').textContent='Próximo: '+getNextNumStr();}
+async function incrementNum(){config.proxNum++;lsave();updateNextNumBadge();}
+
+// ── FIRMA CANVAS ──
+let fCtx=null,fDibujando=false,fVacia=true;
+
+function initCanvas(){
+  const c=document.getElementById('firmaCanvas');if(!c)return;
+  c.width=c.offsetWidth||600;
+  fCtx=c.getContext('2d');
+  fCtx.strokeStyle='#111';fCtx.lineWidth=2;fCtx.lineCap='round';fCtx.lineJoin='round';
+  const pos=e=>{const r=c.getBoundingClientRect(),sx=c.width/r.width,sy=c.height/r.height;if(e.touches)return{x:(e.touches[0].clientX-r.left)*sx,y:(e.touches[0].clientY-r.top)*sy};return{x:(e.clientX-r.left)*sx,y:(e.clientY-r.top)*sy};};
+  const start=e=>{e.preventDefault();fDibujando=true;fVacia=false;const p=pos(e);fCtx.beginPath();fCtx.moveTo(p.x,p.y);document.getElementById('firmaHint').classList.add('hidden');};
+  const draw=e=>{e.preventDefault();if(!fDibujando)return;const p=pos(e);fCtx.lineTo(p.x,p.y);fCtx.stroke();};
+  const stop=e=>{e.preventDefault();fDibujando=false;};
+  c.addEventListener('mousedown',start);c.addEventListener('mousemove',draw);c.addEventListener('mouseup',stop);c.addEventListener('mouseleave',stop);
+  c.addEventListener('touchstart',start,{passive:false});c.addEventListener('touchmove',draw,{passive:false});c.addEventListener('touchend',stop,{passive:false});
+}
+
+function limpiarCanvas(){
+  const c=document.getElementById('firmaCanvas');if(!fCtx||!c)return;
+  fCtx.clearRect(0,0,c.width,c.height);fVacia=true;
+  document.getElementById('firmaHint').classList.remove('hidden');
+}
+
+function guardarFirmaCanvas(){
+  if(fVacia){showToast('Dibujá tu firma primero',true);return;}
+  firmaDataUrl=document.getElementById('firmaCanvas').toDataURL('image/png');
+  lsaveFirma();refreshFirmaPreview();showToast('✓ Firma guardada');
+}
+
+function switchFirmaTab(tab,btn){
+  document.querySelectorAll('.firma-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.firma-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('firmaPanel_'+tab).classList.add('active');
+  if(tab==='dibujar')setTimeout(()=>{const c=document.getElementById('firmaCanvas');if(c&&fCtx){c.width=c.offsetWidth||600;fCtx.strokeStyle='#111';fCtx.lineWidth=2;fCtx.lineCap='round';fCtx.lineJoin='round';}},80);
+}
+
+function cargarFirmaImagen(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{firmaDataUrl=ev.target.result;lsaveFirma();refreshFirmaPreview();showToast('✓ Firma cargada');};
+  r.readAsDataURL(f);
+}
+
+function eliminarFirma(){firmaDataUrl=null;lsaveFirma();refreshFirmaPreview();limpiarCanvas();showToast('Firma eliminada');}
+
+function refreshFirmaPreview(){
+  const w=document.getElementById('firmaPreviewWrap');
+  const dot=document.getElementById('firmaOkDot');
+  const txt=document.getElementById('firmaOkTxt');
+  const btn=document.getElementById('firmaEliminarBtn');
+  if(!w)return;
+  if(firmaDataUrl){
+    w.innerHTML=`<img src="${firmaDataUrl}" style="max-height:80px;max-width:100%;">`;
+    dot.className='firma-ok-dot ok';txt.textContent='Firma guardada';if(btn)btn.style.display='inline-flex';
+  }else{
+    w.innerHTML='<span style="color:#ccc;font-size:13px;">Sin firma guardada</span>';
+    dot.className='firma-ok-dot none';txt.textContent='Sin firma';if(btn)btn.style.display='none';
   }
 }
 
-// ═══════════════════════════════════════════════
-//  LOCAL STORAGE (para configuración y backup)
-// ═══════════════════════════════════════════════
-function localSave() {
-  try { localStorage.setItem('lis_config_local', JSON.stringify(config)); } catch(e){}
-}
-function localLoad() {
-  try {
-    const s = localStorage.getItem('lis_config_local');
-    if (s) config = { ...config, ...JSON.parse(s) };
-  } catch(e){}
-}
+// ── MUESTRAS ──
+function nm(){return{material:'',localizacion:'',numFrascos:1,fijador:'Formol 10%',macroscopia:'',diagnostico:''};}
 
-// ═══════════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════════
-function init() {
-  localLoad(); // carga config guardada localmente (clientId, nombre lab, etc.)
-  applyConfig();
-  updateNextNumBadge();
-  renderDashboard();
-  renderListado();
-  setDriveStatus('disconnected');
-}
-
-// ═══════════════════════════════════════════════
-//  NAV
-// ═══════════════════════════════════════════════
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  const map = { dashboard:'Dashboard', nuevo:'Nueva Biopsia', listado:'Listado de Casos', config:'Configuración', setup:'Guía de Configuración' };
-  document.getElementById('pageTitle').textContent = map[id] || id;
-  const navTxts = { dashboard:'dashboard', nuevo:'nueva', listado:'listado', config:'config', setup:'guía' };
-  document.querySelectorAll('.nav-item').forEach(n => {
-    if (n.textContent.toLowerCase().includes(navTxts[id])) n.classList.add('active');
-  });
-  document.getElementById('driveStatusBar').style.display = id === 'setup' ? 'none' : 'flex';
-  if (id==='nuevo') { resetForm(); setNextNum(); }
-  if (id==='listado') { renderListado(); populateYearFilter(); }
-  if (id==='config') loadConfigForm();
-  if (id==='dashboard') renderDashboard();
-}
-
-// ═══════════════════════════════════════════════
-//  NUMERACIÓN
-// ═══════════════════════════════════════════════
-function getNextNumStr() { return `${String(config.anio).padStart(2,'0')}-${String(config.proxNum).padStart(3,'0')}`; }
-function setNextNum() { document.getElementById('nroInput').value = getNextNumStr(); }
-function updateNextNumBadge() { document.getElementById('nextNumBadge').textContent = 'Próximo: ' + getNextNumStr(); }
-async function incrementNum() { config.proxNum++; localSave(); updateNextNumBadge(); }
-
-// ═══════════════════════════════════════════════
-//  MUESTRAS
-// ═══════════════════════════════════════════════
-function nuevaMuestra() { return { material:'', localizacion:'', numFrascos:1, fijador:'Formol 10%', macroscopia:'', diagnostico:'' }; }
-
-function renderMuestras(containerId, counterId, arr, prefix) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  container.innerHTML = '';
-  arr.forEach((m, i) => {
-    const hasData = m.material || m.localizacion || m.diagnostico;
-    const pill = 'Muestra ' + String.fromCharCode(65+i);
-    const preview = m.material ? ` — ${m.material}${m.localizacion?' · '+m.localizacion:''}` : '';
-    const card = document.createElement('div');
-    card.className = 'muestra-card';
-    card.id = `${prefix}_muestra_${i}`;
-    card.innerHTML = `
-      <div class="muestra-card-header" onclick="toggleMuestra('${prefix}',${i})">
+function renderMuestras(cid,countId,arr,px){
+  const cont=document.getElementById(cid);if(!cont)return;cont.innerHTML='';
+  arr.forEach((m,i)=>{
+    const hd=m.material||m.diagnostico;
+    const pill='Muestra '+String.fromCharCode(65+i);
+    const prev=m.material?` — ${m.material}${m.localizacion?' · '+m.localizacion:''}` : '';
+    const card=document.createElement('div');card.className='muestra-card';card.id=`${px}_m_${i}`;
+    card.innerHTML=`
+      <div class="muestra-card-header" onclick="toggleM('${px}',${i})">
         <div class="muestra-card-title">
-          <span class="muestra-pill${hasData?' has-data':''}">${pill}</span>
-          <span class="muestra-title-preview">${preview}</span>
+          <span class="muestra-pill${hd?' has-data':''}">${pill}</span>
+          <span class="muestra-title-preview">${prev}</span>
         </div>
         <div class="muestra-card-actions" onclick="event.stopPropagation()">
-          ${arr.length>1?`<button class="muestra-remove-btn" onclick="removerMuestra('${prefix}',${i})">✕ Quitar</button>`:''}
-          <button class="muestra-toggle-btn open" id="${prefix}_toggle_${i}">▾</button>
+          ${arr.length>1?`<button class="muestra-remove-btn" onclick="remM('${px}',${i})">✕ Quitar</button>`:''}
+          <button class="muestra-toggle-btn open" id="${px}_t_${i}">▾</button>
         </div>
       </div>
-      <div class="muestra-card-body" id="${prefix}_body_${i}">
+      <div class="muestra-card-body" id="${px}_b_${i}">
         <div class="form-grid four">
-          <div class="form-group"><label>Material Remitido</label><input type="text" id="${prefix}_mat_${i}" value="${esc(m.material)}" placeholder="Piel, ganglio…" oninput="updateMuestra('${prefix}',${i})"></div>
-          <div class="form-group"><label>Localización</label><input type="text" id="${prefix}_loc_${i}" value="${esc(m.localizacion)}" placeholder="Brazo der., cuadrante…" oninput="updateMuestra('${prefix}',${i})"></div>
-          <div class="form-group"><label>N° Frascos</label><input type="number" id="${prefix}_fra_${i}" value="${m.numFrascos||1}" min="1" oninput="updateMuestra('${prefix}',${i})"></div>
-          <div class="form-group"><label>Fijador</label><select id="${prefix}_fij_${i}" onchange="updateMuestra('${prefix}',${i})">
+          <div class="form-group"><label>Material Remitido</label><input type="text" id="${px}_mat_${i}" value="${esc(m.material)}" placeholder="Piel, ganglio…" oninput="upM('${px}',${i})"></div>
+          <div class="form-group"><label>Localización</label><input type="text" id="${px}_loc_${i}" value="${esc(m.localizacion)}" placeholder="Brazo der., cuadrante…" oninput="upM('${px}',${i})"></div>
+          <div class="form-group"><label>N° Frascos</label><input type="number" id="${px}_fra_${i}" value="${m.numFrascos||1}" min="1" oninput="upM('${px}',${i})"></div>
+          <div class="form-group"><label>Fijador</label><select id="${px}_fij_${i}" onchange="upM('${px}',${i})">
             <option ${m.fijador==='Formol 10%'?'selected':''}>Formol 10%</option>
             <option ${m.fijador==='Fresco'?'selected':''}>Fresco</option>
             <option ${m.fijador==='Otro'?'selected':''}>Otro</option>
           </select></div>
         </div>
         <div class="form-group" style="margin-top:10px;"><label>Descripción Macroscópica</label>
-          <textarea id="${prefix}_mac_${i}" style="min-height:70px;" placeholder="Dimensiones, coloración, consistencia…" oninput="updateMuestra('${prefix}',${i})">${m.macroscopia||''}</textarea>
+          <textarea id="${px}_mac_${i}" style="min-height:70px;" placeholder="Dimensiones, coloración, consistencia…" oninput="upM('${px}',${i})">${m.macroscopia||''}</textarea>
         </div>
         <div class="form-group" style="margin-top:10px;"><label>Diagnóstico Histopatológico</label>
-          <textarea id="${prefix}_dx_${i}" style="min-height:80px;font-style:italic;" placeholder="Diagnóstico de esta muestra…" oninput="updateMuestra('${prefix}',${i})">${m.diagnostico||''}</textarea>
+          <textarea id="${px}_dx_${i}" style="min-height:80px;font-style:italic;" placeholder="Diagnóstico de esta muestra…" oninput="upM('${px}',${i})">${m.diagnostico||''}</textarea>
         </div>
       </div>`;
-    container.appendChild(card);
+    cont.appendChild(card);
   });
-  const counter = document.getElementById(counterId);
-  if (counter) counter.textContent = `${arr.length} muestra${arr.length===1?'':'s'}`;
+  const c=document.getElementById(countId);if(c)c.textContent=`${arr.length} muestra${arr.length===1?'':'s'}`;
 }
 
-function esc(s) { return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function esc(s){return(s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function toggleM(px,i){document.getElementById(`${px}_b_${i}`)?.classList.toggle('hidden');document.getElementById(`${px}_t_${i}`)?.classList.toggle('open');}
 
-function toggleMuestra(prefix, i) {
-  const body = document.getElementById(`${prefix}_body_${i}`);
-  const btn  = document.getElementById(`${prefix}_toggle_${i}`);
-  if (!body) return;
-  body.classList.toggle('hidden');
-  btn.classList.toggle('open');
+function upM(px,i){
+  const a=px==='New'?muestrasNew:muestrasEdit;if(!a[i])return;
+  a[i].material=document.getElementById(`${px}_mat_${i}`)?.value||'';
+  a[i].localizacion=document.getElementById(`${px}_loc_${i}`)?.value||'';
+  a[i].numFrascos=parseInt(document.getElementById(`${px}_fra_${i}`)?.value)||1;
+  a[i].fijador=document.getElementById(`${px}_fij_${i}`)?.value||'Formol 10%';
+  a[i].macroscopia=document.getElementById(`${px}_mac_${i}`)?.value||'';
+  a[i].diagnostico=document.getElementById(`${px}_dx_${i}`)?.value||'';
+  const pv=document.querySelector(`#${px}_m_${i} .muestra-title-preview`);
+  const pl=document.querySelector(`#${px}_m_${i} .muestra-pill`);
+  if(pv)pv.textContent=a[i].material?` — ${a[i].material}${a[i].localizacion?' · '+a[i].localizacion:''}` : '';
+  if(pl)pl.className=`muestra-pill${a[i].material||a[i].diagnostico?' has-data':''}`;
 }
 
-function updateMuestra(prefix, i) {
-  const arr = prefix==='New' ? muestrasNew : muestrasEdit;
-  if (!arr[i]) return;
-  arr[i].material    = document.getElementById(`${prefix}_mat_${i}`)?.value||'';
-  arr[i].localizacion= document.getElementById(`${prefix}_loc_${i}`)?.value||'';
-  arr[i].numFrascos  = parseInt(document.getElementById(`${prefix}_fra_${i}`)?.value)||1;
-  arr[i].fijador     = document.getElementById(`${prefix}_fij_${i}`)?.value||'Formol 10%';
-  arr[i].macroscopia = document.getElementById(`${prefix}_mac_${i}`)?.value||'';
-  arr[i].diagnostico = document.getElementById(`${prefix}_dx_${i}`)?.value||'';
-  const preview = document.querySelector(`#${prefix}_muestra_${i} .muestra-title-preview`);
-  const pill    = document.querySelector(`#${prefix}_muestra_${i} .muestra-pill`);
-  if (preview) preview.textContent = arr[i].material ? ` — ${arr[i].material}${arr[i].localizacion?' · '+arr[i].localizacion:''}` : '';
-  if (pill)    pill.className = `muestra-pill${arr[i].material||arr[i].diagnostico?' has-data':''}`;
+function agregarMuestra(px){
+  const a=px==='New'?muestrasNew:muestrasEdit;a.push(nm());
+  const ci=px==='New'?'muestrasContainerNew':'muestrasContainerEdit';
+  const ct=px==='New'?'muestrasCounterNew':'muestrasCounterEdit';
+  renderMuestras(ci,ct,a,px);
+  document.querySelector(`#${ci} .muestra-card:last-child`)?.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-function agregarMuestra(prefix) {
-  const arr = prefix==='New' ? muestrasNew : muestrasEdit;
-  arr.push(nuevaMuestra());
-  const cid = prefix==='New' ? 'muestrasContainerNew' : 'muestrasContainerEdit';
-  const cnt = prefix==='New' ? 'muestrasCounterNew'   : 'muestrasCounterEdit';
-  renderMuestras(cid, cnt, arr, prefix);
-  document.querySelector(`#${cid} .muestra-card:last-child`)?.scrollIntoView({behavior:'smooth',block:'nearest'});
+function remM(px,i){
+  const a=px==='New'?muestrasNew:muestrasEdit;if(a.length<=1)return;
+  leerDOM(px);a.splice(i,1);
+  const ci=px==='New'?'muestrasContainerNew':'muestrasContainerEdit';
+  const ct=px==='New'?'muestrasCounterNew':'muestrasCounterEdit';
+  renderMuestras(ci,ct,a,px);
 }
 
-function removerMuestra(prefix, i) {
-  const arr = prefix==='New' ? muestrasNew : muestrasEdit;
-  if (arr.length<=1) return;
-  leerMuestrasDesdeDOM(prefix);
-  arr.splice(i, 1);
-  const cid = prefix==='New' ? 'muestrasContainerNew' : 'muestrasContainerEdit';
-  const cnt = prefix==='New' ? 'muestrasCounterNew'   : 'muestrasCounterEdit';
-  renderMuestras(cid, cnt, arr, prefix);
-}
-
-function leerMuestrasDesdeDOM(prefix) {
-  const arr = prefix==='New' ? muestrasNew : muestrasEdit;
-  arr.forEach((m, i) => {
-    m.material    = document.getElementById(`${prefix}_mat_${i}`)?.value||'';
-    m.localizacion= document.getElementById(`${prefix}_loc_${i}`)?.value||'';
-    m.numFrascos  = parseInt(document.getElementById(`${prefix}_fra_${i}`)?.value)||1;
-    m.fijador     = document.getElementById(`${prefix}_fij_${i}`)?.value||'Formol 10%';
-    m.macroscopia = document.getElementById(`${prefix}_mac_${i}`)?.value||'';
-    m.diagnostico = document.getElementById(`${prefix}_dx_${i}`)?.value||'';
+function leerDOM(px){
+  const a=px==='New'?muestrasNew:muestrasEdit;
+  a.forEach((m,i)=>{
+    m.material=document.getElementById(`${px}_mat_${i}`)?.value||'';
+    m.localizacion=document.getElementById(`${px}_loc_${i}`)?.value||'';
+    m.numFrascos=parseInt(document.getElementById(`${px}_fra_${i}`)?.value)||1;
+    m.fijador=document.getElementById(`${px}_fij_${i}`)?.value||'Formol 10%';
+    m.macroscopia=document.getElementById(`${px}_mac_${i}`)?.value||'';
+    m.diagnostico=document.getElementById(`${px}_dx_${i}`)?.value||'';
   });
 }
 
-// ═══════════════════════════════════════════════
-//  FORM NUEVO
-// ═══════════════════════════════════════════════
-function resetForm() {
-  ['pacNombre','pacDni','pacFechaNac','pacSexo','medNombre','medEspecialidad','medInstitucion',
-   'obraSocial','datosClinicos','diagnostico','observaciones'].forEach(id => {
-    const el=document.getElementById(id);
-    if (el) { el.tagName==='SELECT'?el.selectedIndex=0:el.value=''; }
-  });
+// ── FORM NUEVO ──
+function resetForm(){
+  ['pacNombre','pacDni','pacFechaNac','pacSexo','medNombre','medEspecialidad','medInstitucion','obraSocial','datosClinicos','diagnostico','observaciones'].forEach(id=>{const el=document.getElementById(id);if(el){el.tagName==='SELECT'?el.selectedIndex=0:el.value='';}});
   document.getElementById('estadoSelect').selectedIndex=0;
   document.getElementById('fechaRecepcion').value=new Date().toISOString().split('T')[0];
-  muestrasNew=[nuevaMuestra()];
-  renderMuestras('muestrasContainerNew','muestrasCounterNew',muestrasNew,'New');
-  setNextNum();
+  muestrasNew=[nm()];renderMuestras('muestrasContainerNew','muestrasCounterNew',muestrasNew,'New');setNextNum();
 }
 
-async function guardarCaso() {
-  const nombre = document.getElementById('pacNombre').value.trim();
-  if (!nombre) { showToast('El nombre del paciente es obligatorio', true); return; }
-  leerMuestrasDesdeDOM('New');
-  const nro = getNextNumStr();
-  const caso = {
-    id: Date.now(), nro,
-    fechaRecepcion: document.getElementById('fechaRecepcion').value,
-    estado: document.getElementById('estadoSelect').value,
-    pacNombre: nombre,
-    pacDni: document.getElementById('pacDni').value,
-    pacFechaNac: document.getElementById('pacFechaNac').value,
-    pacSexo: document.getElementById('pacSexo').value,
-    medNombre: document.getElementById('medNombre').value,
-    medEspecialidad: document.getElementById('medEspecialidad').value,
-    medInstitucion: document.getElementById('medInstitucion').value,
-    obraSocial: document.getElementById('obraSocial').value,
-    datosClinicos: document.getElementById('datosClinicos').value,
-    muestras: JSON.parse(JSON.stringify(muestrasNew)),
-    diagnostico: document.getElementById('diagnostico').value,
-    observaciones: document.getElementById('observaciones').value,
-    fechaCreacion: new Date().toISOString()
-  };
-  casos.unshift(caso);
-  await incrementNum();
-  await driveSaveData();
+async function guardarCaso(){
+  const nombre=document.getElementById('pacNombre').value.trim();
+  if(!nombre){showToast('El nombre del paciente es obligatorio',true);return;}
+  leerDOM('New');const nro=getNextNumStr();
+  const caso={id:Date.now(),nro,fechaRecepcion:document.getElementById('fechaRecepcion').value,estado:document.getElementById('estadoSelect').value,
+    pacNombre:nombre,pacDni:document.getElementById('pacDni').value,pacFechaNac:document.getElementById('pacFechaNac').value,pacSexo:document.getElementById('pacSexo').value,
+    medNombre:document.getElementById('medNombre').value,medEspecialidad:document.getElementById('medEspecialidad').value,medInstitucion:document.getElementById('medInstitucion').value,obraSocial:document.getElementById('obraSocial').value,
+    datosClinicos:document.getElementById('datosClinicos').value,muestras:JSON.parse(JSON.stringify(muestrasNew)),
+    diagnostico:document.getElementById('diagnostico').value,observaciones:document.getElementById('observaciones').value,fechaCreacion:new Date().toISOString()};
+  casos.unshift(caso);await incrementNum();await driveSaveData();
   showToast(`Caso ${nro} guardado — ${caso.muestras.length} muestra${caso.muestras.length===1?'':'s'}`);
-  showPage('listado'); renderDashboard();
+  showPage('listado');renderDashboard();
 }
 
-// ═══════════════════════════════════════════════
-//  DASHBOARD
-// ═══════════════════════════════════════════════
-function renderDashboard() {
-  const yr = String(config.anio).padStart(2,'0');
-  document.getElementById('statTotal').textContent = casos.filter(c=>c.nro.startsWith(yr+'-')).length;
-  document.getElementById('statYearLabel').textContent = 'Año 20'+config.anio;
-  document.getElementById('statPendiente').textContent = casos.filter(c=>c.estado==='pendiente').length;
-  document.getElementById('statCompletado').textContent = casos.filter(c=>c.estado==='completado').length;
-  document.getElementById('statFirmado').textContent = casos.filter(c=>c.estado==='firmado').length;
-  const wrap = document.getElementById('recentCasesTable');
-  wrap.innerHTML = casos.length===0 ? '<div class="empty-state"><p>No hay casos registrados aún</p></div>' : buildTable(casos.slice(0,8));
+// ── DASHBOARD ──
+function renderDashboard(){
+  const yr=String(config.anio).padStart(2,'0');
+  document.getElementById('statTotal').textContent=casos.filter(c=>c.nro.startsWith(yr+'-')).length;
+  document.getElementById('statYearLabel').textContent='Año 20'+config.anio;
+  document.getElementById('statPendiente').textContent=casos.filter(c=>c.estado==='pendiente').length;
+  document.getElementById('statCompletado').textContent=casos.filter(c=>c.estado==='completado').length;
+  document.getElementById('statFirmado').textContent=casos.filter(c=>c.estado==='firmado').length;
+  document.getElementById('recentCasesTable').innerHTML=casos.length===0?'<div class="empty-state"><p>No hay casos registrados aún</p></div>':buildTable(casos.slice(0,8));
 }
 
-// ═══════════════════════════════════════════════
-//  LISTADO
-// ═══════════════════════════════════════════════
-function populateYearFilter() {
-  const sel = document.getElementById('filterYear');
-  const years = [...new Set(casos.map(c=>c.nro.split('-')[0]))].sort().reverse();
-  sel.innerHTML = '<option value="">Todos los años</option>' + years.map(y=>`<option value="${y}">${y}</option>`).join('');
+// ── LISTADO ──
+function populateYearFilter(){
+  const sel=document.getElementById('filterYear');
+  const years=[...new Set(casos.map(c=>c.nro.split('-')[0]))].sort().reverse();
+  sel.innerHTML='<option value="">Todos los años</option>'+years.map(y=>`<option value="${y}">${y}</option>`).join('');
 }
 
-function renderListado() {
-  const q   = (document.getElementById('searchInput').value||'').toLowerCase();
-  const est = document.getElementById('filterEstado').value;
-  const yr  = document.getElementById('filterYear').value;
-  const f   = casos.filter(c=>{
-    const mq = !q||c.nro.toLowerCase().includes(q)||c.pacNombre.toLowerCase().includes(q)||(c.medNombre||'').toLowerCase().includes(q);
-    return mq&&(!est||c.estado===est)&&(!yr||c.nro.startsWith(yr+'-'));
-  });
-  document.getElementById('listadoTable').innerHTML = f.length===0
-    ? '<div class="empty-state"><p>No se encontraron casos</p></div>'
-    : buildTable(f);
+function renderListado(){
+  const q=(document.getElementById('searchInput').value||'').toLowerCase();
+  const est=document.getElementById('filterEstado').value;
+  const yr=document.getElementById('filterYear').value;
+  const f=casos.filter(c=>{const mq=!q||c.nro.toLowerCase().includes(q)||c.pacNombre.toLowerCase().includes(q)||(c.medNombre||'').toLowerCase().includes(q);return mq&&(!est||c.estado===est)&&(!yr||c.nro.startsWith(yr+'-'));});
+  document.getElementById('listadoTable').innerHTML=f.length===0?'<div class="empty-state"><p>No se encontraron casos</p></div>':buildTable(f);
 }
 
-function buildTable(data) {
-  return `<table><thead><tr><th>Número</th><th>Fecha</th><th>Paciente</th><th>Muestras</th><th>Médico</th><th>Estado</th><th></th></tr></thead><tbody>
-    ${data.map(c=>{
-      const nm=(c.muestras||[]).length||1;
-      const mat=(c.muestras||[]).map(m=>m.material).filter(Boolean).join(', ');
-      return `<tr>
-        <td><span class="num-badge">${c.nro}</span></td>
-        <td>${formatDate(c.fechaRecepcion)}</td>
-        <td>${c.pacNombre}</td>
-        <td><span style="font-weight:600;color:var(--accent);">${nm}</span><span style="color:var(--muted);font-size:12px;"> frasco${nm===1?'':'s'}${mat?' · '+mat.substring(0,35)+(mat.length>35?'…':''):''}</span></td>
-        <td>${c.medNombre||'—'}</td>
-        <td><span class="status-badge status-${c.estado}">${c.estado.charAt(0).toUpperCase()+c.estado.slice(1)}</span></td>
-        <td><button class="btn btn-outline btn-sm" onclick="openModal(${c.id})">Ver / Editar</button></td>
-      </tr>`;
-    }).join('')}
-  </tbody></table>`;
+function buildTable(data){
+  return`<table><thead><tr><th>Número</th><th>Fecha</th><th>Paciente</th><th>Muestras</th><th>Médico</th><th>Estado</th><th></th></tr></thead><tbody>
+  ${data.map(c=>{const nm=(c.muestras||[]).length||1;const mat=(c.muestras||[]).map(m=>m.material).filter(Boolean).join(', ');
+    return`<tr><td><span class="num-badge">${c.nro}</span></td><td>${fd(c.fechaRecepcion)}</td><td>${c.pacNombre}</td>
+    <td><span style="font-weight:600;color:var(--accent);">${nm}</span><span style="color:var(--muted);font-size:12px;"> frasco${nm===1?'':'s'}${mat?' · '+mat.substring(0,30)+(mat.length>30?'…':''):''}</span></td>
+    <td>${c.medNombre||'—'}</td><td><span class="status-badge status-${c.estado}">${c.estado.charAt(0).toUpperCase()+c.estado.slice(1)}</span></td>
+    <td><button class="btn btn-outline btn-sm" onclick="openModal(${c.id})">Ver / Editar</button></td></tr>`;
+  }).join('')}</tbody></table>`;
 }
 
-function formatDate(d) { if(!d)return'—'; const[y,m,dd]=d.split('-'); return`${dd}/${m}/${y}`; }
+function fd(d){if(!d)return'—';const[y,m,dd]=d.split('-');return`${dd}/${m}/${y}`;}
+function edad(fn){if(!fn)return null;const e=Math.floor((Date.now()-new Date(fn))/(1e3*60*60*24*365.25));return isNaN(e)?null:e;}
 
-// ═══════════════════════════════════════════════
-//  MODAL
-// ═══════════════════════════════════════════════
-function openModal(id) {
-  casoEditando = casos.find(c=>c.id===id);
-  if (!casoEditando) return;
-  if (!casoEditando.muestras) {
-    casoEditando.muestras = [{ material:casoEditando.materialRemitido||'', localizacion:casoEditando.localizacion||'',
-      numFrascos:casoEditando.numFrascos||1, fijador:casoEditando.fijador||'Formol 10%',
-      macroscopia:casoEditando.macroscopia||'', diagnostico:casoEditando.diagnostico||'' }];
-  }
-  muestrasEdit = JSON.parse(JSON.stringify(casoEditando.muestras));
-  document.getElementById('modalTitle').textContent = `Caso ${casoEditando.nro} — ${casoEditando.pacNombre}`;
-  document.getElementById('modalBody').innerHTML = buildModalForm(casoEditando);
+// ── MODAL ──
+function openModal(id){
+  casoEditando=casos.find(c=>c.id===id);if(!casoEditando)return;
+  if(!casoEditando.muestras)casoEditando.muestras=[{material:casoEditando.materialRemitido||'',localizacion:casoEditando.localizacion||'',numFrascos:casoEditando.numFrascos||1,fijador:casoEditando.fijador||'Formol 10%',macroscopia:casoEditando.macroscopia||'',diagnostico:casoEditando.diagnostico||''}];
+  muestrasEdit=JSON.parse(JSON.stringify(casoEditando.muestras));
+  document.getElementById('modalTitle').textContent=`Caso ${casoEditando.nro} — ${casoEditando.pacNombre}`;
+  document.getElementById('modalBody').innerHTML=buildModalForm(casoEditando);
   renderMuestras('muestrasContainerEdit','muestrasCounterEdit',muestrasEdit,'Edit');
   document.getElementById('modalOverlay').classList.add('open');
 }
-function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); casoEditando=null; muestrasEdit=[]; }
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');casoEditando=null;muestrasEdit=[];}
 
-function buildModalForm(c) {
+function buildModalForm(c){
   const v=x=>(x||'').replace(/"/g,'&quot;').replace(/</g,'&lt;');
-  return `
+  return`
   <div class="form-grid three">
-    <div class="form-group"><label>Número de Caso</label><input type="text" value="${v(c.nro)}" readonly style="background:#f0ece6;font-weight:700;color:var(--accent);font-size:15px;"></div>
+    <div class="form-group"><label>Número</label><input type="text" value="${v(c.nro)}" readonly style="background:#f0ece6;font-weight:700;color:var(--accent);font-size:15px;"></div>
     <div class="form-group"><label>Fecha Recepción</label><input type="date" id="m_fechaRecepcion" value="${v(c.fechaRecepcion)}"></div>
-    <div class="form-group"><label>Estado</label><select id="m_estado">
-      <option value="pendiente" ${c.estado==='pendiente'?'selected':''}>Pendiente</option>
-      <option value="completado" ${c.estado==='completado'?'selected':''}>Completado</option>
-      <option value="firmado" ${c.estado==='firmado'?'selected':''}>Firmado</option>
-    </select></div>
+    <div class="form-group"><label>Estado</label><select id="m_estado"><option value="pendiente" ${c.estado==='pendiente'?'selected':''}>Pendiente</option><option value="completado" ${c.estado==='completado'?'selected':''}>Completado</option><option value="firmado" ${c.estado==='firmado'?'selected':''}>Firmado</option></select></div>
   </div>
   <hr class="section-divider"><span class="sec-label">Datos del Paciente</span>
   <div class="form-grid">
     <div class="form-group"><label>Apellido y Nombre</label><input type="text" id="m_pacNombre" value="${v(c.pacNombre)}"></div>
     <div class="form-group"><label>DNI / HC</label><input type="text" id="m_pacDni" value="${v(c.pacDni)}"></div>
     <div class="form-group"><label>Fecha de Nacimiento</label><input type="date" id="m_pacFechaNac" value="${v(c.pacFechaNac)}"></div>
-    <div class="form-group"><label>Sexo</label><select id="m_pacSexo"><option value="">—</option>
-      <option ${c.pacSexo==='Masculino'?'selected':''}>Masculino</option>
-      <option ${c.pacSexo==='Femenino'?'selected':''}>Femenino</option>
-      <option ${c.pacSexo==='Otro'?'selected':''}>Otro</option>
-    </select></div>
+    <div class="form-group"><label>Sexo</label><select id="m_pacSexo"><option value="">—</option><option ${c.pacSexo==='Masculino'?'selected':''}>Masculino</option><option ${c.pacSexo==='Femenino'?'selected':''}>Femenino</option><option ${c.pacSexo==='Otro'?'selected':''}>Otro</option></select></div>
   </div>
   <hr class="section-divider"><span class="sec-label">Médico y Clínica</span>
   <div class="form-grid">
@@ -949,10 +735,7 @@ function buildModalForm(c) {
   <hr class="section-divider"><span class="sec-label">Datos Clínicos</span>
   <div class="form-group"><textarea id="m_datosClinicos">${c.datosClinicos||''}</textarea></div>
   <hr class="section-divider">
-  <div class="muestras-header">
-    <span class="sec-label">Muestras / Frascos</span>
-    <span class="muestras-counter" id="muestrasCounterEdit">…</span>
-  </div>
+  <div class="muestras-header"><span class="sec-label">Muestras / Frascos</span><span class="muestras-counter" id="muestrasCounterEdit">…</span></div>
   <div id="muestrasContainerEdit"></div>
   <button class="btn-add-muestra" onclick="agregarMuestra('Edit')">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
@@ -963,221 +746,262 @@ function buildModalForm(c) {
   <div class="form-group mt-16"><label>Observaciones</label><textarea id="m_observaciones">${c.observaciones||''}</textarea></div>`;
 }
 
-async function guardarEdicion() {
-  if (!casoEditando) return;
-  const idx = casos.findIndex(c=>c.id===casoEditando.id);
-  if (idx===-1) return;
-  leerMuestrasDesdeDOM('Edit');
-  ['fechaRecepcion','estado','pacNombre','pacDni','pacFechaNac','pacSexo',
-   'medNombre','medEspecialidad','medInstitucion','obraSocial','datosClinicos',
-   'diagnostico','observaciones'].forEach(f=>{ const el=document.getElementById('m_'+f); if(el) casos[idx][f]=el.value; });
-  casos[idx].muestras = JSON.parse(JSON.stringify(muestrasEdit));
-  await driveSaveData();
-  showToast('Cambios guardados en Drive');
-  closeModal(); renderDashboard(); renderListado();
+async function guardarEdicion(){
+  if(!casoEditando)return;
+  const idx=casos.findIndex(c=>c.id===casoEditando.id);if(idx===-1)return;
+  leerDOM('Edit');
+  ['fechaRecepcion','estado','pacNombre','pacDni','pacFechaNac','pacSexo','medNombre','medEspecialidad','medInstitucion','obraSocial','datosClinicos','diagnostico','observaciones'].forEach(f=>{const el=document.getElementById('m_'+f);if(el)casos[idx][f]=el.value;});
+  casos[idx].muestras=JSON.parse(JSON.stringify(muestrasEdit));
+  await driveSaveData();showToast('Cambios guardados');closeModal();renderDashboard();renderListado();
 }
 
-async function eliminarCasoModal() {
-  if (!casoEditando) return;
-  if (!confirm(`¿Eliminar el caso ${casoEditando.nro}? Esta acción no se puede deshacer.`)) return;
-  casos = casos.filter(c=>c.id!==casoEditando.id);
-  await driveSaveData();
-  showToast('Caso eliminado');
-  closeModal(); renderDashboard(); renderListado();
+async function eliminarCasoModal(){
+  if(!casoEditando)return;
+  if(!confirm(`¿Eliminar el caso ${casoEditando.nro}?`))return;
+  casos=casos.filter(c=>c.id!==casoEditando.id);
+  await driveSaveData();showToast('Caso eliminado');closeModal();renderDashboard();renderListado();
 }
 
-// ═══════════════════════════════════════════════
-//  PDF
-// ═══════════════════════════════════════════════
-function generarPDF() {
-  const c = casoEditando; if (!c) return;
-  leerMuestrasDesdeDOM('Edit');
-  const get=(id,fb)=>{ const el=document.getElementById('m_'+id); return el?el.value:(fb||''); };
-  const caso = { ...c, estado:get('estado',c.estado), fechaRecepcion:get('fechaRecepcion',c.fechaRecepcion),
-    pacNombre:get('pacNombre',c.pacNombre), pacDni:get('pacDni',c.pacDni), pacFechaNac:get('pacFechaNac',c.pacFechaNac),
-    pacSexo:get('pacSexo',c.pacSexo), medNombre:get('medNombre',c.medNombre), medEspecialidad:get('medEspecialidad',c.medEspecialidad),
-    medInstitucion:get('medInstitucion',c.medInstitucion), obraSocial:get('obraSocial',c.obraSocial),
-    datosClinicos:get('datosClinicos',c.datosClinicos), muestras:JSON.parse(JSON.stringify(muestrasEdit)),
-    diagnostico:get('diagnostico',c.diagnostico), observaciones:get('observaciones',c.observaciones) };
+// ── PDF ── estética basada en informe de referencia
+function generarPDF(){
+  const c=casoEditando;if(!c)return;
+  leerDOM('Edit');
+  const g=(id,fb)=>{const el=document.getElementById('m_'+id);return el?el.value:(fb||'');};
+  const caso={...c,estado:g('estado',c.estado),fechaRecepcion:g('fechaRecepcion',c.fechaRecepcion),
+    pacNombre:g('pacNombre',c.pacNombre),pacDni:g('pacDni',c.pacDni),pacFechaNac:g('pacFechaNac',c.pacFechaNac),pacSexo:g('pacSexo',c.pacSexo),
+    medNombre:g('medNombre',c.medNombre),medEspecialidad:g('medEspecialidad',c.medEspecialidad),medInstitucion:g('medInstitucion',c.medInstitucion),obraSocial:g('obraSocial',c.obraSocial),
+    datosClinicos:g('datosClinicos',c.datosClinicos),muestras:JSON.parse(JSON.stringify(muestrasEdit)),
+    diagnostico:g('diagnostico',c.diagnostico),observaciones:g('observaciones',c.observaciones)};
 
-  const {jsPDF}=window.jspdf;
+  const{jsPDF}=window.jspdf;
   const doc=new jsPDF({unit:'mm',format:'a4'});
-  const W=210,H=297,ml=20,mr=20; let y=15;
+  const W=210,H=297,ml=18,mr=18,CW=W-ml-mr;
+  let y=14;
 
-  doc.setFillColor(184,150,90); doc.rect(0,0,W,3,'F');
-  let txtX=ml;
-  if (config.logo) { try { doc.addImage(config.logo,'PNG',ml,y,28,18); txtX=ml+32; } catch(e){} }
-  doc.setFont('helvetica','bold'); doc.setFontSize(13); doc.setTextColor(44,74,62);
-  doc.text(config.labName||'Laboratorio de Anatomía Patológica', txtX, y+7);
-  doc.setFont('helvetica','normal'); doc.setFontSize(8.5); doc.setTextColor(107,101,96);
-  let sy=y+12;
-  if (config.direccion){doc.text(config.direccion,txtX,sy);sy+=4.5;}
-  const ct=[config.telefono,config.email].filter(Boolean).join('  |  ');
-  if (ct){doc.text(ct,txtX,sy);sy+=4.5;}
-  if (config.matricula){doc.text('Mat.: '+config.matricula,txtX,sy);}
-  y=Math.max(sy,y+20)+5;
-  doc.setDrawColor(184,150,90); doc.setLineWidth(0.6); doc.line(ml,y,W-mr,y); y+=6;
-  doc.setFont('times','bold'); doc.setFontSize(13); doc.setTextColor(30,53,48);
-  doc.text('INFORME ANATOMOPATOLÓGICO',W/2,y,{align:'center'}); y+=5;
-  doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(107,101,96);
-  doc.text('N° '+caso.nro,W/2,y,{align:'center'}); y+=8;
+  // Colores del diseño de referencia
+  const AZUL=[44,82,130];       // azul oscuro secciones
+  const AZUL_CLR=[235,241,250]; // azul muy claro fondo filas tabla
+  const NEGRO=[30,30,30];
+  const GRIS=[100,100,100];
+  const GRIS_CLR=[245,245,245];
 
-  const section=title=>{
-    doc.setFillColor(240,236,230); doc.rect(ml,y,W-ml-mr,6,'F');
-    doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(44,74,62);
-    doc.text(title.toUpperCase(),ml+3,y+4.2); y+=8;
-    doc.setFont('helvetica','normal'); doc.setTextColor(26,26,26); doc.setFontSize(9.5);
+  // ── ENCABEZADO ──
+  // Logo AP (cuadrado azul a la derecha, como en el original)
+  const logoSize=22;
+  doc.setFillColor(...AZUL);
+  doc.rect(W-mr-logoSize, y, logoSize, logoSize,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(16);doc.setTextColor(255,255,255);
+  doc.text('AP',W-mr-logoSize/2, y+11,{align:'center'});
+  doc.setFontSize(6.5);doc.setFont('helvetica','normal');
+  doc.text('ANATOMÍA PATOLÓGICA',W-mr-logoSize/2, y+16,{align:'center'});
+
+  // Si hay logo propio lo superpone
+  if(config.logo){try{doc.addImage(config.logo,'PNG',W-mr-logoSize,y,logoSize,logoSize);}catch(e){}}
+
+  // Nombre del firmante / laboratorio a la izquierda
+  doc.setFont('helvetica','bold');doc.setFontSize(15);doc.setTextColor(...NEGRO);
+  doc.text(config.firmanteNombre||config.labName||'Victoria I. Volonteri', ml, y+7);
+  doc.setFont('helvetica','italic');doc.setFontSize(9);doc.setTextColor(...AZUL);
+  if(config.firmanteEsp) doc.text(config.firmanteEsp, ml, y+13);
+  doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(...GRIS);
+  let hy=y+18;
+  if(config.labName&&config.firmanteNombre){doc.text(config.labName,ml,hy);hy+=4.5;}
+  if(config.medInstitucion||config.direccion){doc.text(config.medInstitucion||config.direccion,ml,hy);hy+=4.5;}
+  if(config.matricula){doc.text('M.N. '+config.matricula,ml,hy);hy+=4.5;}
+
+  y=Math.max(hy, y+logoSize)+3;
+
+  // Línea separadora azul
+  doc.setDrawColor(...AZUL);doc.setLineWidth(0.8);doc.line(ml,y,W-mr,y);y+=8;
+
+  // Título
+  doc.setFont('helvetica','bold');doc.setFontSize(13);doc.setTextColor(...NEGRO);
+  doc.text('INFORME DE ESTUDIO HISTOPATOLÓGICO',W/2,y,{align:'center'});y+=10;
+
+  // ── Helpers ──
+  const chk=(n=30)=>{
+    if(y+n>H-22){
+      // pie en página actual
+      piePagina(doc,W,H,ml,mr,GRIS);
+      doc.addPage();y=14;
+    }
   };
-  const field=(label,value)=>{
-    if(!value)return;
-    doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(107,101,96);
-    doc.text(label+':',ml,y);
-    doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(26,26,26);
-    const lines=doc.splitTextToSize(value,W-ml-mr-36);
-    doc.text(lines,ml+36,y); y+=lines.length*5+1;
+
+  // Sección: fondo azul oscuro, texto blanco
+  const sec=t=>{
+    chk(14);
+    doc.setFillColor(...AZUL);doc.rect(ml,y,CW,7,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(255,255,255);
+    doc.text(t.toUpperCase(),ml+3,y+5);
+    y+=7;
+    doc.setTextColor(...NEGRO);doc.setFontSize(9.5);
   };
-  const block=text=>{
+
+  // Fila de tabla: alterna fondo blanco / azul muy claro
+  let rowIdx=0;
+  const row=(label,value)=>{
+    if(!value&&value!==0)return;
+    const lines=doc.splitTextToSize(String(value),CW-52);
+    const rh=Math.max(7,lines.length*5.5);
+    chk(rh+2);
+    doc.setFillColor(...(rowIdx%2===0?[255,255,255]:AZUL_CLR));
+    doc.rect(ml,y,CW,rh,'F');
+    // Etiqueta en negrita azul
+    doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(...AZUL);
+    doc.text(label,ml+2,y+rh/2+2.5);
+    // Valor en negro normal
+    doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(...NEGRO);
+    doc.text(lines,ml+52,y+rh/2-(lines.length-1)*2.5+1.5);
+    y+=rh;rowIdx++;
+  };
+
+  // Bloque de texto libre con fondo gris claro
+  const blk=(text,italic=false)=>{
     if(!text)return;
-    const lines=doc.splitTextToSize(text,W-ml-mr);
-    doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(26,26,26);
-    doc.text(lines,ml,y); y+=lines.length*5+3;
+    const lines=doc.splitTextToSize(text,CW-6);
+    const bh=lines.length*5.5+6;
+    chk(bh);
+    doc.setFillColor(...GRIS_CLR);doc.rect(ml,y,CW,bh,'F');
+    doc.setFont('helvetica',italic?'bolditalic':'normal');doc.setFontSize(9.5);doc.setTextColor(...NEGRO);
+    doc.text(lines,ml+3,y+5.5);
+    y+=bh+2;
   };
-  const checkPage=(needed=20)=>{
-    if(y+needed>H-50){doc.addPage();y=20;doc.setFillColor(184,150,90);doc.rect(0,0,W,2,'F');}
-  };
 
-  section('Datos del Caso');
-  field('Fecha de Recepción',formatDate(caso.fechaRecepcion));
-  field('Estado',caso.estado.charAt(0).toUpperCase()+caso.estado.slice(1)); y+=2;
+  // ── DATOS DEL ESTUDIO ──
+  rowIdx=0;
+  sec('DATOS DEL ESTUDIO');
+  row('Protocolo N°', caso.nro);
+  row('Fecha', fd(caso.fechaRecepcion));
+  row('Nombre del paciente', caso.pacNombre);
+  const e=edad(caso.pacFechaNac);
+  if(e!==null) row('Edad', e+' años');
+  if(caso.pacSexo) row('Sexo', caso.pacSexo);
+  if(caso.obraSocial) row('Obra Social / Prepaga', caso.obraSocial);
+  row('Médico solicitante', caso.medNombre);
+  if(caso.medEspecialidad) row('Especialidad', caso.medEspecialidad);
+  if(caso.medInstitucion) row('Institución', caso.medInstitucion);
 
-  checkPage(); section('Datos del Paciente');
-  field('Apellido y Nombre',caso.pacNombre);
-  field('DNI / Historia Clínica',caso.pacDni);
-  if(caso.pacFechaNac){const edad=Math.floor((Date.now()-new Date(caso.pacFechaNac))/(1e3*60*60*24*365.25));field('Fecha de Nacimiento',formatDate(caso.pacFechaNac)+(isNaN(edad)?'':` (${edad} años)`));}
-  field('Sexo',caso.pacSexo); field('Obra Social / Prepaga',caso.obraSocial); y+=2;
+  // Material remitido: primera muestra o todas
+  const mats=(caso.muestras||[]).map((m,i)=>{
+    const l=String.fromCharCode(65+i);
+    return caso.muestras.length>1?`${l}. ${m.material}${m.localizacion?' — '+m.localizacion:''}`:m.material+(m.localizacion?' — '+m.localizacion:'');
+  }).filter(Boolean).join('\n');
+  if(mats) row('Material remitido', mats);
+  if(caso.datosClinicos) row('Datos clínicos', caso.datosClinicos);
+  y+=4;
 
-  checkPage(); section('Médico Solicitante');
-  field('Nombre',caso.medNombre); field('Especialidad',caso.medEspecialidad); field('Institución / Servicio',caso.medInstitucion); y+=2;
-
-  if(caso.datosClinicos){checkPage();section('Datos Clínicos');block(caso.datosClinicos);y+=2;}
-
+  // ── MUESTRAS ──
   (caso.muestras||[]).forEach((m,i)=>{
-    const letra=String.fromCharCode(65+i);
-    checkPage(30);
-    doc.setFillColor(44,74,62); doc.rect(ml,y,W-ml-mr,7,'F');
-    doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(255,255,255);
-    doc.text(`MUESTRA ${letra}${m.material?' — '+m.material.toUpperCase():''}${m.localizacion?' · '+m.localizacion.toUpperCase():''}`,ml+3,y+4.8); y+=9;
-    doc.setTextColor(26,26,26); doc.setFontSize(9.5);
-    field('N° de Frascos',String(m.numFrascos||1)); field('Fijador',m.fijador); y+=2;
-    if(m.macroscopia){doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(107,101,96);doc.text('DESCRIPCIÓN MACROSCÓPICA:',ml,y);y+=4;block(m.macroscopia);}
-    if(m.diagnostico){checkPage(20);doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(107,101,96);doc.text('DIAGNÓSTICO HISTOPATOLÓGICO:',ml,y);y+=4;
-      doc.setFont('helvetica','bolditalic');doc.setFontSize(10);doc.setTextColor(44,74,62);
-      const dl=doc.splitTextToSize(m.diagnostico,W-ml-mr);doc.text(dl,ml,y);y+=dl.length*5.5+3;}
-    y+=3;
+    const l=String.fromCharCode(65+i);
+    const hayContenido=m.macroscopia||m.diagnostico;
+    if(!hayContenido)return;
+
+    // Si hay más de una muestra, mostrar subtítulo
+    if((caso.muestras||[]).length>1){
+      chk(12);
+      doc.setFillColor(...AZUL);doc.rect(ml,y,CW,7,'F');
+      doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(255,255,255);
+      const mLabel=`MUESTRA ${l}${m.material?' — '+m.material.toUpperCase():''}`;
+      doc.text(mLabel,ml+3,y+5);y+=7;
+    }
+
+    if(m.macroscopia){
+      chk(12);
+      sec('MACROSCOPIA');
+      blk(m.macroscopia);
+    }
+
+    if(m.diagnostico){
+      chk(12);
+      // Microscopia = descripción histopatológica (lo que en el sistema llamamos macroscopia del diagnóstico)
+      // Diagnóstico: sección propia con texto en negrita
+      sec('DIAGNÓSTICO');
+      blk(m.diagnostico,true);
+    }
   });
 
-  if(caso.diagnostico){checkPage();section('Diagnóstico General / Conclusión');
-    doc.setFont('helvetica','bolditalic');doc.setFontSize(10);doc.setTextColor(44,74,62);
-    const dl=doc.splitTextToSize(caso.diagnostico,W-ml-mr);doc.text(dl,ml,y);y+=dl.length*5.5+3;}
-  if(caso.observaciones){checkPage();section('Observaciones');block(caso.observaciones);}
+  // Diagnóstico general / conclusión
+  if(caso.diagnostico){
+    chk(12);sec('DIAGNÓSTICO GENERAL / CONCLUSIÓN');blk(caso.diagnostico,true);
+  }
+  if(caso.observaciones){
+    chk(12);sec('OBSERVACIONES');blk(caso.observaciones);
+  }
 
-  y=Math.max(y+10,H-55);
-  if(y+45>H-10){doc.addPage();y=40;}
-  doc.setDrawColor(200,195,190);doc.setLineWidth(0.3);doc.line(ml,y,W-mr,y);y+=3;
-  doc.setFontSize(8);doc.setTextColor(107,101,96);
-  doc.text('Fecha de emisión: '+new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'}),ml,y);
-  y+=14;
-  const sx=W/2-30;
-  doc.setDrawColor(26,26,26);doc.setLineWidth(0.5);doc.line(sx,y,sx+60,y);y+=5;
-  doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(44,74,62);
-  doc.text(config.firmanteNombre||'Firma y Sello',W/2,y,{align:'center'});y+=4.5;
-  doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(107,101,96);
-  if(config.firmanteEsp){doc.text(config.firmanteEsp,W/2,y,{align:'center'});y+=4;}
-  if(config.firmanteMatricula)doc.text('Mat. '+config.firmanteMatricula,W/2,y,{align:'center'});
-  doc.setFillColor(184,150,90);doc.rect(0,H-3,W,3,'F');
+  // ── FIRMA ──
+  y=Math.max(y+10, H-70);
+  if(y+55>H-22){piePagina(doc,W,H,ml,mr,GRIS);doc.addPage();y=30;}
+
+  // Línea separadora
+  doc.setDrawColor(180,180,180);doc.setLineWidth(0.3);doc.line(ml,y,W-mr,y);y+=6;
+
+  // Imagen de firma
+  const fw=55,fh=22,fx=ml;
+  if(firmaDataUrl){
+    try{doc.addImage(firmaDataUrl,'PNG',fx,y,fw,fh);y+=fh+3;}
+    catch(e){y+=8;}
+  }
+
+  // Nombre firmante en negrita
+  doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...AZUL);
+  doc.text('Dra. '+(config.firmanteNombre||'Victoria I. Volonteri'),fx,y);y+=5;
+  doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(...GRIS);
+  if(config.firmanteEsp){doc.text(config.firmanteEsp,fx,y);y+=4.5;}
+
+  // Pie de página final
+  piePagina(doc,W,H,ml,mr,GRIS,config.firmanteMatricula);
   doc.save(`AP_${caso.nro}_${caso.pacNombre.replace(/\s/g,'_')}.pdf`);
   showToast('PDF generado correctamente');
 }
 
-// ═══════════════════════════════════════════════
-//  CONFIG
-// ═══════════════════════════════════════════════
-function loadConfigForm() {
-  document.getElementById('cfgClientId').value = config.clientId||'';
-  ['labName','direccion','telefono','email','matricula','firmanteNombre','firmanteEsp','firmanteMatricula'].forEach(k=>{
-    const el=document.getElementById('cfg'+k.charAt(0).toUpperCase()+k.slice(1));
-    if(el) el.value=config[k]||'';
-  });
-  document.getElementById('cfgAnio').value=config.anio||'';
-  document.getElementById('cfgProxNum').value=config.proxNum||825;
-  if(config.logo){
-    document.getElementById('logoPreviewDiv').innerHTML=`<img class="logo-preview" src="${config.logo}">`;
-    document.getElementById('clearLogoBtn').style.display='inline-flex';
+function piePagina(doc,W,H,ml,mr,GRIS,matricula){
+  const totalPages=doc.internal.getNumberOfPages();
+  for(let i=1;i<=totalPages;i++){
+    doc.setPage(i);
+    doc.setDrawColor(180,180,180);doc.setLineWidth(0.3);doc.line(ml,H-16,W-mr,H-16);
+    doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(...GRIS);
+    if(matricula) doc.text('Médica Patóloga  —  M.N. '+matricula, ml, H-11);
+    doc.text('Información confidencial — Secreto Médico — Alcance del Artículo 156 del Código Penal', ml, H-7);
+    doc.text('Pág. '+i, W-mr, H-7,{align:'right'});
   }
 }
 
-async function guardarConfig() {
+// ── CONFIG ──
+function loadConfigForm(){
+  document.getElementById('cfgClientId').value=config.clientId||'';
+  ['labName','direccion','telefono','email','matricula','firmanteNombre','firmanteEsp','firmanteMatricula'].forEach(k=>{const el=document.getElementById('cfg'+k.charAt(0).toUpperCase()+k.slice(1));if(el)el.value=config[k]||'';});
+  document.getElementById('cfgAnio').value=config.anio||'';
+  document.getElementById('cfgProxNum').value=config.proxNum||825;
+  if(config.logo){document.getElementById('logoPreviewDiv').innerHTML=`<img class="logo-preview" src="${config.logo}">`;document.getElementById('clearLogoBtn').style.display='inline-flex';}
+}
+
+async function guardarConfig(){
   config.clientId=document.getElementById('cfgClientId').value.trim();
-  config.labName=document.getElementById('cfgLabName').value;
-  config.direccion=document.getElementById('cfgDireccion').value;
-  config.telefono=document.getElementById('cfgTelefono').value;
-  config.email=document.getElementById('cfgEmail').value;
-  config.matricula=document.getElementById('cfgMatricula').value;
-  config.firmanteNombre=document.getElementById('cfgFirmanteNombre').value;
-  config.firmanteEsp=document.getElementById('cfgFirmanteEsp').value;
-  config.firmanteMatricula=document.getElementById('cfgFirmanteMatricula').value;
-  config.anio=document.getElementById('cfgAnio').value;
-  config.proxNum=parseInt(document.getElementById('cfgProxNum').value)||825;
-  localSave();
-  applyConfig(); updateNextNumBadge();
-  showToast('Configuración guardada localmente');
+  config.labName=document.getElementById('cfgLabName').value;config.direccion=document.getElementById('cfgDireccion').value;
+  config.telefono=document.getElementById('cfgTelefono').value;config.email=document.getElementById('cfgEmail').value;
+  config.matricula=document.getElementById('cfgMatricula').value;config.firmanteNombre=document.getElementById('cfgFirmanteNombre').value;
+  config.firmanteEsp=document.getElementById('cfgFirmanteEsp').value;config.firmanteMatricula=document.getElementById('cfgFirmanteMatricula').value;
+  config.anio=document.getElementById('cfgAnio').value;config.proxNum=parseInt(document.getElementById('cfgProxNum').value)||825;
+  lsave();applyConfig();updateNextNumBadge();showToast('Configuración guardada');
 }
 
-function applyConfig() {
-  document.getElementById('sidebarLabName').textContent=config.labName||'Laboratorio de Anatomía Patológica';
-}
+function applyConfig(){document.getElementById('sidebarLabName').textContent=config.labName||'Laboratorio de Anatomía Patológica';}
 
-function handleLogoUpload(event) {
-  const file=event.target.files[0]; if(!file) return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    config.logo=e.target.result;
-    document.getElementById('logoPreviewDiv').innerHTML=`<img class="logo-preview" src="${config.logo}">`;
-    document.getElementById('clearLogoBtn').style.display='inline-flex';
-    localSave(); showToast('Logo cargado');
-  };
-  reader.readAsDataURL(file);
-}
+function handleLogoUpload(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{config.logo=ev.target.result;document.getElementById('logoPreviewDiv').innerHTML=`<img class="logo-preview" src="${config.logo}">`;document.getElementById('clearLogoBtn').style.display='inline-flex';lsave();showToast('Logo cargado');};r.readAsDataURL(f);}
+function clearLogo(){config.logo=null;document.getElementById('logoPreviewDiv').innerHTML=`<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5" style="margin-bottom:8px;display:block;margin-left:auto;margin-right:auto;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p style="color:var(--muted);font-size:13px;">Hacé clic para subir el logo</p>`;document.getElementById('clearLogoBtn').style.display='none';lsave();showToast('Logo eliminado');}
 
-function clearLogo() {
-  config.logo=null;
-  document.getElementById('logoPreviewDiv').innerHTML=`<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5" style="margin-bottom:8px;display:block;margin-left:auto;margin-right:auto;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p style="color:var(--muted);font-size:13px;">Hacé clic para subir el logo</p>`;
-  document.getElementById('clearLogoBtn').style.display='none';
-  localSave(); showToast('Logo eliminado');
-}
-
-function exportarCSV() {
-  const headers=['Número','Fecha Recepción','Paciente','DNI','Sexo','Médico','N° Muestras','Materiales','Estado'];
-  const rows=casos.map(c=>{
-    const m=c.muestras||[];
-    return [c.nro,c.fechaRecepcion,c.pacNombre,c.pacDni,c.pacSexo,c.medNombre,m.length,m.map(x=>x.material||'').join(' | '),c.estado]
-      .map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`);
-  });
-  const csv=[headers.join(','),...rows.map(r=>r.join(','))].join('\n');
+function exportarCSV(){
+  const h=['Número','Fecha Recepción','Paciente','DNI','Sexo','Médico','N° Muestras','Materiales','Estado'];
+  const rows=casos.map(c=>{const m=c.muestras||[];return[c.nro,c.fechaRecepcion,c.pacNombre,c.pacDni,c.pacSexo,c.medNombre,m.length,m.map(x=>x.material||'').join(' | '),c.estado].map(v=>`"${(v||'').toString().replace(/"/g,'""')}"`)});
+  const csv=[h.join(','),...rows.map(r=>r.join(','))].join('\n');
   const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download=`casos_AP_${new Date().toISOString().split('T')[0]}.csv`; a.click();
-  URL.revokeObjectURL(url); showToast('CSV exportado');
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`casos_AP_${new Date().toISOString().split('T')[0]}.csv`;a.click();URL.revokeObjectURL(url);showToast('CSV exportado');
 }
 
-function showToast(msg,isError=false) {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.className='toast'+(isError?' error':'')+' show';
-  setTimeout(()=>t.classList.remove('show'),3500);
-}
+function showToast(msg,isError=false){const t=document.getElementById('toast');t.textContent=msg;t.className='toast'+(isError?' error':'')+' show';setTimeout(()=>t.classList.remove('show'),3500);}
 
 document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
 </html>
