@@ -913,23 +913,23 @@ function generarPDF(){
 
     if(m.diagnostico){
       chk(12);
-      // Microscopia = descripción histopatológica (lo que en el sistema llamamos macroscopia del diagnóstico)
-      // Diagnóstico: sección propia con texto en negrita
-      sec('DIAGNÓSTICO');
-      blk(m.diagnostico,true);
+
+
+      sec('MICROSCOPIA');
+      blk(m.diagnostico);
     }
   });
 
-  // Diagnóstico general / conclusión
+
   if(caso.diagnostico){
-    chk(12);sec('DIAGNÓSTICO GENERAL / CONCLUSIÓN');blk(caso.diagnostico,true);
+    chk(12);sec('DIAGNÓSTICO');blk(caso.diagnostico,true);
   }
   if(caso.observaciones){
     chk(12);sec('OBSERVACIONES');blk(caso.observaciones);
   }
 
   // ── FIRMA ──
-  y=Math.max(y+10, H-70);
+  y=Math.max(y+4, H-60);
   if(y+55>H-22){piePagina(doc,W,H,ml,mr,GRIS);doc.addPage();y=30;}
 
   // Línea separadora
