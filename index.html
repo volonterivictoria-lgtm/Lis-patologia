@@ -251,7 +251,13 @@
           </button>
           <hr class="section-divider">
           <span class="sec-label">Diagnóstico</span>
-          <div class="form-group"><textarea id="diagnostico" style="min-height:80px;" placeholder="Diagnóstico final…"></textarea></div>
+          <div class="form-group">
+            <div class="autocomplete-wrap" style="margin-bottom:6px;">
+              <input type="text" placeholder="🔍 Buscá en la biblioteca para insertar diagnóstico…" oninput="acBuscarDx(this,'diagnostico')" style="font-size:13px;">
+              <div class="autocomplete-list" id="ac_dx_diagnostico"></div>
+            </div>
+            <textarea id="diagnostico" style="min-height:80px;" placeholder="Diagnóstico final…"></textarea>
+          </div>
           <div class="form-group mt-16"><label>Observaciones / Notas</label><textarea id="observaciones"></textarea></div>
           <div class="flex" style="margin-top:24px;">
             <button class="btn btn-primary" onclick="guardarCaso()">
@@ -418,9 +424,13 @@
         <label>Nombre del Diagnóstico</label>
         <input type="text" id="biblioNombre" placeholder="Ej: Carcinoma basocelular nodular...">
       </div>
+      <div class="form-group" style="margin-bottom:16px;">
+        <label>Descripción Microscópica <span style="font-size:10px;color:var(--muted);font-weight:400;">(opcional)</span></label>
+        <textarea id="biblioDescripcion" style="min-height:120px;" placeholder="Descripción histológica completa..."></textarea>
+      </div>
       <div class="form-group">
-        <label>Descripción Microscópica</label>
-        <textarea id="biblioDescripcion" style="min-height:160px;" placeholder="Descripción histológica completa..."></textarea>
+        <label>Diagnóstico <span style="font-size:10px;color:var(--muted);font-weight:400;">(opcional — se inserta en el campo Diagnóstico)</span></label>
+        <textarea id="biblioDiagnostico" style="min-height:80px;" placeholder="Texto del diagnóstico..."></textarea>
       </div>
     </div>
     <div class="modal-footer">
@@ -812,7 +822,13 @@ function buildModalForm(c){
     Agregar otra muestra / frasco
   </button>
   <hr class="section-divider"><span class="sec-label">Diagnóstico</span>
-  <div class="form-group"><textarea id="m_diagnostico" style="min-height:80px;">${c.diagnostico||''}</textarea></div>
+  <div class="form-group">
+    <div class="autocomplete-wrap" style="margin-bottom:6px;">
+      <input type="text" placeholder="🔍 Buscá en la biblioteca para insertar diagnóstico…" oninput="acBuscarDx(this,'m_diagnostico')" style="font-size:13px;">
+      <div class="autocomplete-list" id="ac_dx_m_diagnostico"></div>
+    </div>
+    <textarea id="m_diagnostico" style="min-height:80px;">${c.diagnostico||''}</textarea>
+  </div>
   <div class="form-group mt-16"><label>Observaciones</label><textarea id="m_observaciones">${c.observaciones||''}</textarea></div>`;
 }
 
@@ -1079,9 +1095,11 @@ function renderBiblioteca(){
   wrap.innerHTML=filtered.map((d,i)=>{
     const realIdx=biblioteca.indexOf(d);
     const prev=d.descripcion.length>120?d.descripcion.substring(0,120)+'…':d.descripcion;
+    const tags=(d.descripcion?'<span style="background:#d1e7dd;color:#0f5132;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;margin-right:4px;">Microscopía</span>':'')+
+             (d.diagnostico?'<span style="background:#cfe2ff;color:#084298;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;">Diagnóstico</span>':'');
     return `<div class="biblio-card" id="bcard_${realIdx}">
       <div class="biblio-card-header">
-        <span class="biblio-nombre">${d.nombre}</span>
+        <span class="biblio-nombre">${d.nombre} ${tags}</span>
         <div class="biblio-actions">
           <button class="btn btn-outline btn-sm" onclick="toggleBiblioCard(${realIdx})">Ver</button>
           <button class="btn btn-outline btn-sm" onclick="abrirModalBiblioteca(${realIdx})">✏️ Editar</button>
@@ -1099,8 +1117,16 @@ function toggleBiblioCard(idx){
   const isOpen=card.classList.contains('open');
   card.classList.toggle('open');
   const d=biblioteca[idx];
-  if(!isOpen) preview.textContent=d.descripcion;
-  else preview.textContent=d.descripcion.length>120?d.descripcion.substring(0,120)+'…':d.descripcion;
+  if(!isOpen){
+    let txt='';
+    if(d.descripcion) txt+='MICROSCOPÍA:\n'+d.descripcion;
+    if(d.diagnostico) txt+=(txt?'\n\nDIAGNÓSTICO:\n':''+'DIAGNÓSTICO:\n')+d.diagnostico;
+    preview.style.whiteSpace='pre-wrap';
+    preview.textContent=txt;
+  } else {
+    const base=d.descripcion||d.diagnostico||'';
+    preview.textContent=base.length>120?base.substring(0,120)+'…':base;
+  }
   document.querySelectorAll('.biblio-card').forEach(c=>{if(c.id!=='bcard_'+idx)c.classList.remove('open');});
 }
 
@@ -1112,12 +1138,14 @@ function abrirModalBiblioteca(idx){
     const d=biblioteca[biblioEditIdx];
     document.getElementById('modalBiblioTitle').textContent='Editar Descripción';
     document.getElementById('biblioNombre').value=d.nombre;
-    document.getElementById('biblioDescripcion').value=d.descripcion;
+    document.getElementById('biblioDescripcion').value=d.descripcion||'';
+    document.getElementById('biblioDiagnostico').value=d.diagnostico||'';
     btnEliminar.style.display='inline-flex';
   } else {
     document.getElementById('modalBiblioTitle').textContent='Nueva Descripción';
     document.getElementById('biblioNombre').value='';
     document.getElementById('biblioDescripcion').value='';
+    document.getElementById('biblioDiagnostico').value='';
     btnEliminar.style.display='none';
   }
   modal.classList.add('open');
@@ -1132,12 +1160,13 @@ function cerrarModalBiblioteca(){
 function guardarDescripcion(){
   const nombre=document.getElementById('biblioNombre').value.trim();
   const descripcion=document.getElementById('biblioDescripcion').value.trim();
+  const diagnostico=document.getElementById('biblioDiagnostico').value.trim();
   if(!nombre){showToast('El nombre es obligatorio',true);return;}
-  if(!descripcion){showToast('La descripción es obligatoria',true);return;}
+  if(!descripcion&&!diagnostico){showToast('Completá al menos la Microscopía o el Diagnóstico',true);return;}
   if(biblioEditIdx!==null){
-    biblioteca[biblioEditIdx]={nombre,descripcion};
+    biblioteca[biblioEditIdx]={nombre,descripcion,diagnostico};
   } else {
-    biblioteca.push({nombre,descripcion});
+    biblioteca.push({nombre,descripcion,diagnostico});
     biblioteca.sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
   }
   lsaveBiblio();
@@ -1205,6 +1234,40 @@ function insertarDescripcion(textareaId,nombre){
   const searchInput=document.querySelector(`[data-ac-target="${textareaId}"]`);
   if(searchInput)searchInput.value='';
   showToast('Descripción insertada');
+}
+
+
+function acBuscarDx(input,targetId){
+  const q=input.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const listId='ac_dx_'+targetId;
+  let list=document.getElementById(listId);
+  if(!list){
+    list=document.createElement('div');
+    list.id=listId;list.className='autocomplete-list';
+    input.parentElement.appendChild(list);
+  }
+  if(!q){list.classList.remove('open');return;}
+  // Solo muestra entradas que tengan diagnóstico guardado
+  const results=biblioteca.filter(d=>d.diagnostico&&d.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(q)).slice(0,8);
+  if(!results.length){list.classList.remove('open');return;}
+  list.innerHTML=results.map(d=>{
+    const safeName=d.nombre.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `<div class="autocomplete-item" onclick="insertarDxEnTextarea('${targetId}','${safeName}');this.closest('.autocomplete-list').classList.remove('open');this.closest('.autocomplete-wrap').querySelector('input').value='';">
+      <strong>${d.nombre}</strong>
+      <small>${d.diagnostico.substring(0,80)}…</small>
+    </div>`;
+  }).join('');
+  list.classList.add('open');
+}
+
+function insertarDxEnTextarea(textareaId,nombre){
+  const d=biblioteca.find(x=>x.nombre===nombre);
+  if(!d||!d.diagnostico)return;
+  const ta=document.getElementById(textareaId);
+  if(!ta)return;
+  ta.value=d.diagnostico;
+  ta.dispatchEvent(new Event('input'));
+  showToast('✓ Diagnóstico insertado');
 }
 
 
@@ -1351,3 +1414,4 @@ document.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
 </html>
+
