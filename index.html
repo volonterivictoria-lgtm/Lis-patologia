@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LIS — Anatomía Patológica</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap');
   :root{--bg:#f5f3ef;--surface:#fff;--border:#d9d4cc;--accent:#2c4a3e;--accent2:#4a7c68;--gold:#b8965a;--text:#1a1a1a;--muted:#6b6560;--danger:#8b2a2a;--sidebar:#1e3530;}
@@ -246,7 +246,7 @@
     <!-- LISTADO -->
     <div class="page" id="page-listado">
       <div class="panel">
-        <div class="panel-header"><h3>Listado de Casos</h3><button class="btn btn-primary btn-sm" onclick="exportarCSV()">↓ Exportar CSV</button></div>
+        <div class="panel-header"><h3>Listado de Casos</h3><div style="display:flex;gap:8px;"><button class="btn btn-outline btn-sm" onclick="document.getElementById('importExcelInput').click()">↑ Importar Excel</button><input type="file" id="importExcelInput" accept=".xlsx,.xls,.csv" style="display:none" onchange="importarExcel(event)"><button class="btn btn-primary btn-sm" onclick="exportarCSV()">↓ Exportar CSV</button></div></div>
         <div class="panel-body">
           <div class="search-row">
             <input type="text" id="searchInput" placeholder="Buscar paciente, número..." oninput="renderListado()">
@@ -990,6 +990,100 @@ function applyConfig(){document.getElementById('sidebarLabName').textContent=con
 
 function handleLogoUpload(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{config.logo=ev.target.result;document.getElementById('logoPreviewDiv').innerHTML=`<img class="logo-preview" src="${config.logo}">`;document.getElementById('clearLogoBtn').style.display='inline-flex';lsave();showToast('Logo cargado');};r.readAsDataURL(f);}
 function clearLogo(){config.logo=null;document.getElementById('logoPreviewDiv').innerHTML=`<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5" style="margin-bottom:8px;display:block;margin-left:auto;margin-right:auto;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p style="color:var(--muted);font-size:13px;">Hacé clic para subir el logo</p>`;document.getElementById('clearLogoBtn').style.display='none';lsave();showToast('Logo eliminado');}
+
+function importarExcel(event){
+  const file=event.target.files[0];
+  if(!file)return;
+  event.target.value='';
+  const reader=new FileReader();
+  reader.onload=async function(e){
+    try{
+      const wb=XLSX.read(e.target.result,{type:'array',cellDates:true});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const rows=XLSX.utils.sheet_to_json(ws,{defval:''});
+      if(!rows.length){showToast('El archivo está vacío',true);return;}
+
+      // Busca el valor de una fila según palabras clave en el encabezado
+      function col(row,keys){
+        const headers=Object.keys(row);
+        for(const k of keys){
+          const h=headers.find(function(h){
+            return h.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(k);
+          });
+          if(h&&row[h]!==undefined&&row[h]!=='') return String(row[h]).trim();
+        }
+        return '';
+      }
+
+      // Normaliza fecha a YYYY-MM-DD
+      function normFecha(raw){
+        if(!raw)return '';
+        if(raw instanceof Date){
+          return raw.toISOString().split('T')[0];
+        }
+        const s=String(raw).trim();
+        const d=new Date(s);
+        if(!isNaN(d.getTime()))return d.toISOString().split('T')[0];
+        const p=s.split(/[\/\-\.]/);
+        if(p.length===3){
+          const a=p[0],b=p[1],c=p[2];
+          if(a.length===4) return a+'-'+b.padStart(2,'0')+'-'+c.padStart(2,'0');
+          const yr=c.length===4?c:'20'+c;
+          return yr+'-'+b.padStart(2,'0')+'-'+a.padStart(2,'0');
+        }
+        return '';
+      }
+
+      let importados=0,duplicados=0;
+      for(let i=0;i<rows.length;i++){
+        const row=rows[i];
+        const nro=col(row,['protocolo','numero','nro','n°']);
+        if(!nro)continue;
+        if(casos.find(function(c){return c.nro===nro;})){duplicados++;continue;}
+        const caso={
+          id:Date.now()+i,
+          nro:nro,
+          fechaRecepcion:normFecha(col(row,['fecha'])),
+          estado:'completado',
+          pacNombre:col(row,['paciente','nombre','apellido']),
+          pacDni:col(row,['dni','historia','hc']),
+          pacFechaNac:'',
+          pacSexo:'',
+          medNombre:col(row,['medico','doctor','solicitante']),
+          medEspecialidad:'',
+          medInstitucion:'',
+          obraSocial:'',
+          datosClinicos:col(row,['datos','clinico','sospecha','otros']),
+          muestras:[{
+            material:col(row,['material','muestra','tejido']),
+            localizacion:col(row,['localizacion','sitio']),
+            numFrascos:1,
+            fijador:'Formol 10%',
+            macroscopia:'',
+            diagnostico:col(row,['diagnostico','dx'])
+          }],
+          diagnostico:col(row,['diagnostico','dx','conclusion']),
+          observaciones:col(row,['observacion','nota']),
+          fechaCreacion:new Date().toISOString(),
+          importado:true
+        };
+        casos.push(caso);
+        importados++;
+      }
+
+      casos.sort(function(a,b){return b.nro.localeCompare(a.nro,undefined,{numeric:true});});
+      await driveSaveData();
+      renderDashboard();renderListado();
+      var msg=importados+' caso'+(importados===1?'':'s')+' importado'+(importados===1?'':'s');
+      if(duplicados>0) msg+=' ('+duplicados+' duplicado'+(duplicados===1?'':'s')+' omitido'+(duplicados===1?'':'s')+')';
+      showToast('✓ '+msg);
+    }catch(err){
+      showToast('Error al leer el archivo: '+err.message,true);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
 
 function exportarCSV(){
   const h=['Número','Fecha Recepción','Paciente','DNI','Sexo','Médico','N° Muestras','Materiales','Estado'];
