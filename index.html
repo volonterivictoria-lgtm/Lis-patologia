@@ -106,6 +106,24 @@
   .muestra-card-body{padding:16px;} .muestra-card-body.hidden{display:none;}
   .btn-add-muestra{width:100%;border:2px dashed var(--border);background:transparent;color:var(--accent2);font-family:'Source Sans 3',sans-serif;font-size:13px;font-weight:600;padding:12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;margin-top:4px;}
   .btn-add-muestra:hover{border-color:var(--accent2);background:#f0f7f4;}
+
+  /* BIBLIOTECA */
+  .biblio-card{border:1px solid var(--border);border-radius:8px;margin-bottom:10px;background:#fff;transition:border-color .2s;}
+  .biblio-card:hover{border-color:var(--accent2);}
+  .biblio-card-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;}
+  .biblio-nombre{font-weight:600;font-size:14px;color:var(--accent);flex:1;}
+  .biblio-actions{display:flex;gap:8px;}
+  .biblio-preview{padding:0 16px 12px;font-size:12px;color:var(--muted);line-height:1.5;border-top:1px solid #f0ece6;padding-top:10px;display:none;}
+  .biblio-card.open .biblio-preview{display:block;}
+  /* AUTOCOMPLETE */
+  .autocomplete-wrap{position:relative;}
+  .autocomplete-list{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--border);border-radius:0 0 8px 8px;z-index:500;max-height:220px;overflow-y:auto;box-shadow:0 4px 16px rgba(0,0,0,.1);display:none;}
+  .autocomplete-list.open{display:block;}
+  .autocomplete-item{padding:10px 14px;cursor:pointer;font-size:13px;border-bottom:1px solid #f5f5f5;}
+  .autocomplete-item:hover{background:var(--bg);}
+  .autocomplete-item strong{color:var(--accent);}
+  .autocomplete-item small{display:block;color:var(--muted);font-size:11px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
   /* FIRMA */
   .firma-tabs{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px;}
   .firma-tab{flex:1;padding:10px;text-align:center;cursor:pointer;font-size:13px;font-weight:600;background:var(--bg);color:var(--muted);border:none;transition:all .2s;}
@@ -142,6 +160,9 @@
     </div>
     <div class="nav-item" onclick="showPage('config')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>Configuración
+    </div>
+    <div class="nav-item" onclick="showPage('biblioteca')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="12" y1="6" x2="16" y2="6"/><line x1="12" y1="10" x2="16" y2="10"/></svg>Biblioteca
     </div>
   </nav>
   <div class="sidebar-footer">
@@ -364,8 +385,51 @@
       </div>
     </div>
 
+
+    <!-- BIBLIOTECA -->
+    <div class="page" id="page-biblioteca">
+      <div class="panel">
+        <div class="panel-header">
+          <h3>Biblioteca de Descripciones</h3>
+          <button class="btn btn-primary btn-sm" onclick="abrirModalBiblioteca()">+ Nueva Descripción</button>
+        </div>
+        <div class="panel-body">
+          <div class="search-row">
+            <input type="text" id="biblioSearch" placeholder="Buscar diagnóstico..." oninput="renderBiblioteca()" style="max-width:400px;">
+          </div>
+          <div id="biblioList"></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </main>
+
+
+<!-- MODAL BIBLIOTECA -->
+<div class="modal-overlay" id="modalBiblioOverlay">
+  <div class="modal" style="max-width:640px;">
+    <div class="modal-header">
+      <h3 id="modalBiblioTitle">Nueva Descripción</h3>
+      <button class="close-btn" onclick="cerrarModalBiblioteca()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group" style="margin-bottom:16px;">
+        <label>Nombre del Diagnóstico</label>
+        <input type="text" id="biblioNombre" placeholder="Ej: Carcinoma basocelular nodular...">
+      </div>
+      <div class="form-group">
+        <label>Descripción Microscópica</label>
+        <textarea id="biblioDescripcion" style="min-height:160px;" placeholder="Descripción histológica completa..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger btn-sm" id="biblioBtnEliminar" onclick="eliminarDescripcion()" style="display:none;">Eliminar</button>
+      <button class="btn btn-outline" onclick="cerrarModalBiblioteca()">Cancelar</button>
+      <button class="btn btn-primary" onclick="guardarDescripcion()">Guardar</button>
+    </div>
+  </div>
+</div>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay">
@@ -466,16 +530,17 @@ function lload(){try{const s=localStorage.getItem('lis_cfg');if(s)config={...con
 function lsaveFirma(){try{firmaDataUrl?localStorage.setItem('lis_firma',firmaDataUrl):localStorage.removeItem('lis_firma');}catch(e){}}
 function lloadFirma(){try{firmaDataUrl=localStorage.getItem('lis_firma')||null;}catch(e){}}
 
-function init(){lload();lloadFirma();applyConfig();updateNextNumBadge();renderDashboard();renderListado();setDriveStatus('disconnected');initCanvas();refreshFirmaPreview();}
+function init(){lload();lloadFirma();lloadBiblio();applyConfig();updateNextNumBadge();renderDashboard();renderListado();setDriveStatus('disconnected');initCanvas();refreshFirmaPreview();}
 
 // ── NAV ──
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  const map={dashboard:'Dashboard',nuevo:'Nueva Biopsia',listado:'Listado de Casos',config:'Configuración'};
+  const map={dashboard:'Dashboard',nuevo:'Nueva Biopsia',listado:'Listado de Casos',config:'Configuración',biblioteca:'Biblioteca'};
   document.getElementById('pageTitle').textContent=map[id]||id;
   document.querySelectorAll('.nav-item').forEach(n=>{if(n.textContent.toLowerCase().includes(id==='nuevo'?'nueva':id))n.classList.add('active');});
+  if(id==='biblioteca')renderBiblioteca();
   if(id==='nuevo'){resetForm();setNextNum();}
   if(id==='listado'){renderListado();populateYearFilter();}
   if(id==='config'){loadConfigForm();refreshFirmaPreview();}
@@ -583,7 +648,12 @@ function renderMuestras(cid,countId,arr,px){
         <div class="form-group" style="margin-top:10px;"><label>Macroscopía</label>
           <textarea id="${px}_mac_${i}" style="min-height:70px;" placeholder="Descripción macroscópica…" oninput="upM('${px}',${i})">${m.macroscopia||''}</textarea>
         </div>
-        <div class="form-group" style="margin-top:10px;"><label>Microscopía</label>
+        <div class="form-group" style="margin-top:10px;">
+          <label>Microscopía <span style="font-size:10px;color:var(--accent2);font-weight:400;letter-spacing:0;">— buscá en la biblioteca:</span></label>
+          <div class="autocomplete-wrap">
+            <input type="text" placeholder="🔍 Escribí el diagnóstico para buscar descripción…" data-ac-target="${px}_dx_${i}" oninput="acBuscar(this,'${px}_dx_${i}')" style="margin-bottom:6px;font-size:13px;">
+            <div class="autocomplete-list" id="ac_${px}_dx_${i}"></div>
+          </div>
           <textarea id="${px}_dx_${i}" style="min-height:80px;font-style:italic;" placeholder="Descripción microscópica…" oninput="upM('${px}',${i})">${m.diagnostico||''}</textarea>
         </div>
       </div>`;
@@ -991,6 +1061,186 @@ function applyConfig(){document.getElementById('sidebarLabName').textContent=con
 function handleLogoUpload(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{config.logo=ev.target.result;document.getElementById('logoPreviewDiv').innerHTML=`<img class="logo-preview" src="${config.logo}">`;document.getElementById('clearLogoBtn').style.display='inline-flex';lsave();showToast('Logo cargado');};r.readAsDataURL(f);}
 function clearLogo(){config.logo=null;document.getElementById('logoPreviewDiv').innerHTML=`<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5" style="margin-bottom:8px;display:block;margin-left:auto;margin-right:auto;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p style="color:var(--muted);font-size:13px;">Hacé clic para subir el logo</p>`;document.getElementById('clearLogoBtn').style.display='none';lsave();showToast('Logo eliminado');}
 
+// ── BIBLIOTECA ──
+let biblioteca=[];
+let biblioEditIdx=null;
+
+function lsaveBiblio(){try{localStorage.setItem('lis_biblio',JSON.stringify(biblioteca));}catch(e){}}
+function lloadBiblio(){try{const s=localStorage.getItem('lis_biblio');if(s)biblioteca=JSON.parse(s);}catch(e){}}
+
+function renderBiblioteca(){
+  const q=(document.getElementById('biblioSearch')?.value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const wrap=document.getElementById('biblioList');if(!wrap)return;
+  const filtered=biblioteca.filter(d=>{
+    const n=d.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    return !q||n.includes(q);
+  });
+  if(!filtered.length){wrap.innerHTML='<div class="empty-state"><p>'+(biblioteca.length===0?'No hay descripciones todavía. Hacé clic en "+ Nueva Descripción" para agregar.':'No se encontraron resultados.')+'</p></div>';return;}
+  wrap.innerHTML=filtered.map((d,i)=>{
+    const realIdx=biblioteca.indexOf(d);
+    const prev=d.descripcion.length>120?d.descripcion.substring(0,120)+'…':d.descripcion;
+    return `<div class="biblio-card" id="bcard_${realIdx}">
+      <div class="biblio-card-header">
+        <span class="biblio-nombre">${d.nombre}</span>
+        <div class="biblio-actions">
+          <button class="btn btn-outline btn-sm" onclick="toggleBiblioCard(${realIdx})">Ver</button>
+          <button class="btn btn-outline btn-sm" onclick="abrirModalBiblioteca(${realIdx})">✏️ Editar</button>
+        </div>
+      </div>
+      <div class="biblio-preview" id="bpreview_${realIdx}">${prev}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleBiblioCard(idx){
+  const card=document.getElementById('bcard_'+idx);
+  const preview=document.getElementById('bpreview_'+idx);
+  if(!card||!preview)return;
+  const isOpen=card.classList.contains('open');
+  card.classList.toggle('open');
+  const d=biblioteca[idx];
+  if(!isOpen) preview.textContent=d.descripcion;
+  else preview.textContent=d.descripcion.length>120?d.descripcion.substring(0,120)+'…':d.descripcion;
+  document.querySelectorAll('.biblio-card').forEach(c=>{if(c.id!=='bcard_'+idx)c.classList.remove('open');});
+}
+
+function abrirModalBiblioteca(idx){
+  biblioEditIdx=(idx!==undefined)?idx:null;
+  const modal=document.getElementById('modalBiblioOverlay');
+  const btnEliminar=document.getElementById('biblioBtnEliminar');
+  if(biblioEditIdx!==null){
+    const d=biblioteca[biblioEditIdx];
+    document.getElementById('modalBiblioTitle').textContent='Editar Descripción';
+    document.getElementById('biblioNombre').value=d.nombre;
+    document.getElementById('biblioDescripcion').value=d.descripcion;
+    btnEliminar.style.display='inline-flex';
+  } else {
+    document.getElementById('modalBiblioTitle').textContent='Nueva Descripción';
+    document.getElementById('biblioNombre').value='';
+    document.getElementById('biblioDescripcion').value='';
+    btnEliminar.style.display='none';
+  }
+  modal.classList.add('open');
+  setTimeout(()=>document.getElementById('biblioNombre').focus(),100);
+}
+
+function cerrarModalBiblioteca(){
+  document.getElementById('modalBiblioOverlay').classList.remove('open');
+  biblioEditIdx=null;
+}
+
+function guardarDescripcion(){
+  const nombre=document.getElementById('biblioNombre').value.trim();
+  const descripcion=document.getElementById('biblioDescripcion').value.trim();
+  if(!nombre){showToast('El nombre es obligatorio',true);return;}
+  if(!descripcion){showToast('La descripción es obligatoria',true);return;}
+  if(biblioEditIdx!==null){
+    biblioteca[biblioEditIdx]={nombre,descripcion};
+  } else {
+    biblioteca.push({nombre,descripcion});
+    biblioteca.sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
+  }
+  lsaveBiblio();
+  cerrarModalBiblioteca();
+  renderBiblioteca();
+  showToast('Descripción guardada');
+}
+
+function eliminarDescripcion(){
+  if(biblioEditIdx===null)return;
+  if(!confirm('¿Eliminar esta descripción?'))return;
+  biblioteca.splice(biblioEditIdx,1);
+  lsaveBiblio();
+  cerrarModalBiblioteca();
+  renderBiblioteca();
+  showToast('Descripción eliminada');
+}
+
+// ── AUTOCOMPLETE en campo Microscopía ──
+let autocompleteTarget=null;
+
+function initAutocomplete(inputId,targetTextareaId){
+  const input=document.getElementById(inputId);
+  const textarea=document.getElementById(targetTextareaId);
+  if(!input||!textarea)return;
+
+  // Crear lista
+  let listId='ac_'+inputId;
+  let list=document.getElementById(listId);
+  if(!list){
+    const wrap=input.parentElement;
+    wrap.style.position='relative';
+    list=document.createElement('div');
+    list.id=listId;list.className='autocomplete-list';
+    wrap.appendChild(list);
+  }
+
+  input.addEventListener('input',function(){
+    const q=this.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    if(!q){list.classList.remove('open');return;}
+    const results=biblioteca.filter(d=>d.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(q)).slice(0,8);
+    if(!results.length){list.classList.remove('open');return;}
+    list.innerHTML=results.map(d=>`<div class="autocomplete-item" onclick="insertarDescripcion('${targetTextareaId}','${d.nombre.replace(/'/g,"\\'")}')">
+      <strong>${d.nombre}</strong>
+      <small>${d.descripcion.substring(0,80)}…</small>
+    </div>`).join('');
+    list.classList.add('open');
+  });
+
+  document.addEventListener('click',function(e){
+    if(!input.contains(e.target)&&!list.contains(e.target)) list.classList.remove('open');
+  });
+}
+
+function insertarDescripcion(textareaId,nombre){
+  const d=biblioteca.find(x=>x.nombre===nombre);
+  if(!d)return;
+  const textarea=document.getElementById(textareaId);
+  if(!textarea)return;
+  textarea.value=d.descripcion;
+  textarea.dispatchEvent(new Event('input'));
+  // Cerrar autocomplete
+  document.querySelectorAll('.autocomplete-list').forEach(l=>l.classList.remove('open'));
+  // Limpiar campo búsqueda
+  const searchInput=document.querySelector(`[data-ac-target="${textareaId}"]`);
+  if(searchInput)searchInput.value='';
+  showToast('Descripción insertada');
+}
+
+
+function acBuscar(input,targetId){
+  const q=input.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const listId='ac_'+targetId;
+  let list=document.getElementById(listId);
+  if(!list){
+    list=document.createElement('div');
+    list.id=listId;list.className='autocomplete-list';
+    input.parentElement.appendChild(list);
+  }
+  if(!q){list.classList.remove('open');return;}
+  const results=biblioteca.filter(d=>d.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(q)).slice(0,8);
+  if(!results.length){list.classList.remove('open');return;}
+  list.innerHTML=results.map(d=>{
+    const safeName=d.nombre.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `<div class="autocomplete-item" onclick="insertarEnTextarea('${targetId}','${safeName}');this.closest('.autocomplete-list').classList.remove('open');this.closest('.autocomplete-wrap').querySelector('input').value='';">
+      <strong>${d.nombre}</strong>
+      <small>${d.descripcion.substring(0,80)}…</small>
+    </div>`;
+  }).join('');
+  list.classList.add('open');
+}
+
+function insertarEnTextarea(textareaId,nombre){
+  const d=biblioteca.find(x=>x.nombre===nombre);
+  if(!d)return;
+  const ta=document.getElementById(textareaId);
+  if(!ta)return;
+  ta.value=d.descripcion;
+  ta.dispatchEvent(new Event('input'));
+  showToast('✓ Descripción insertada');
+}
+
+
 function importarExcel(event){
   const file=event.target.files[0];
   if(!file)return;
@@ -1096,6 +1346,7 @@ function exportarCSV(){
 function showToast(msg,isError=false){const t=document.getElementById('toast');t.textContent=msg;t.className='toast'+(isError?' error':'')+' show';setTimeout(()=>t.classList.remove('show'),3500);}
 
 document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.getElementById('modalBiblioOverlay').addEventListener('click',function(e){if(e.target===this)cerrarModalBiblioteca();});
 document.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
